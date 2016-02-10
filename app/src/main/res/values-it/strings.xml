@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Consulenze App</string>
+    <string name="Register">Registrati</string>
+    <string name="action_sign_in">Accedi</string>
+    <string name="action_sign_in_short">Accedi</string>
+    <string name="error_field_required">Questo campo è necessario</string>
+    <string name="error_incorrect_password">La password non è corretta</string>
+    <string name="error_invalid_email">L\'email non è valida</string>
+    <string name="error_invalid_password">La password è troppo corta</string>
+    <string name="permission_rationale">I permessi dei contatti sono necessari per fornire l\'email</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="address">Indirizzo</string>
+    <string name="email">Email</string>
+    <string name="insert_value">Compila i campi</string>
+    <string name="name">Nome</string>
+    <string name="principal_specialization">Specializzazione Principale</string>
+    <string name="secondary_specializations">Specializzazione Secondarie</string>
+    <string name="surname">Cognome</string>
+    <string name="register">Registrati</string>
+</resources>
