@@ -88,7 +88,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             @Override
             public void onClick(View view) {
                 //attemptLogin();
-                Intent intent = new Intent(Login.this, MainActivity.class);
+                Intent intent = new Intent(Login.this, Main2Activity.class);
                 startActivity(intent);
             }
         });

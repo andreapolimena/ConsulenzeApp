@@ -19,4 +19,9 @@
     <string name="secondary_specializations">Specializzazione Secondarie</string>
     <string name="surname">Cognome</string>
     <string name="register">Registrati</string>
+    <string name="action_settings">Impostazioni</string>
+    <string name="hello_blank_fragment">Ciao Fragment vuoto</string>
+    <string name="navigation_drawer_close">Chiudi menu laterale</string>
+    <string name="navigation_drawer_open">Apri menu laterale</string>
+    <string name="title_activity_main2">Appuntamenti</string>
 </resources>
