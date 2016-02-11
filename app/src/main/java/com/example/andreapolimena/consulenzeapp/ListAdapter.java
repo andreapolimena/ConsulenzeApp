@@ -34,7 +34,7 @@ public class ListAdapter extends ArrayAdapter<Utente> {
             vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.list_item, null);
         }
-
+        //Utente generico
         Utente p = getItem(position);
 
         if (p != null) {
