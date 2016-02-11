@@ -29,4 +29,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_insert">Insert</string>
+    <string name="Specialization">Specialization</string>
+    <string name="Register">Register</string>
 </resources>

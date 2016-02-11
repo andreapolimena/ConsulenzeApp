@@ -24,4 +24,7 @@
     <string name="navigation_drawer_close">Chiudi menu laterale</string>
     <string name="navigation_drawer_open">Apri menu laterale</string>
     <string name="title_activity_main2">Appuntamenti</string>
+    <string name="Specialization">Specializzazione</string>
+    <string name="large_text"></string>
+    <string name="title_activity_insert">Inserimento Consulenza</string>
 </resources>
