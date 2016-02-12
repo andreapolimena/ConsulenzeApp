@@ -1,9 +1,9 @@
 package com.example.andreapolimena.consulenzeapp;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,8 +25,16 @@ public class Main2Activity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
         ListView listView = (ListView) findViewById(R.id.listView2);
         List listUtente = new LinkedList();
+        listUtente.add(new Utente());
+        listUtente.add(new Utente());
+        listUtente.add(new Utente());
+        listUtente.add(new Utente());
+        listUtente.add(new Utente());
+        listUtente.add(new Utente());
+        listUtente.add(new Utente());
         listUtente.add(new Utente());
         listUtente.add(new Utente());
         ListAdapter listAdapter = new com.example.andreapolimena.consulenzeapp.ListAdapter(this, R.layout.list_item, listUtente);

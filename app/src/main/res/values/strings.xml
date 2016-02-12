@@ -32,4 +32,8 @@
     <string name="title_activity_insert">Insert</string>
     <string name="Specialization">Specialization</string>
     <string name="Register">Register</string>
+    <string name="appIcon">appIcon</string>
+    <string name="AppName">Android Studio</string>
+    <string name="applicazionePerConsulenza">android.studio@android.com</string>
+    <string name="large_text">Large Text</string>
 </resources>

@@ -42,8 +42,12 @@ public class ListAdapter extends ArrayAdapter<Utente> {
             TextView nomeCognome = (TextView) v.findViewById(R.id.textView3);
             TextView tipoConsulenza = (TextView) v.findViewById(R.id.textView4);
             TextView ora = (TextView) v.findViewById(R.id.textView5);
+            TextView valutazione = (TextView) v.findViewById(R.id.textView6);
             RatingBar ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
 
+            ratingBar.setStepSize((float)0.1);
+            ratingBar.setRating((float) 2.5);
+            ratingBar.setEnabled(false);
             if (data != null) {
                 data.setText("12/12/1223");
             }
@@ -58,9 +62,10 @@ public class ListAdapter extends ArrayAdapter<Utente> {
             if(ora!= null){
                 ora.setText("10:00");
             }
-            ratingBar.setStepSize((float)0.1);
-            ratingBar.setRating((float) 2.5);
-            ratingBar.setEnabled(false);
+            if(valutazione!=null){
+                valutazione.setText("Valutazione: "+((Float)ratingBar.getRating()).toString());
+            }
+
         }
 
         return v;
