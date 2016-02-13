@@ -27,13 +27,27 @@
     <string name="title_activity_main2">Dates</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
     <string name="title_activity_insert">Insert</string>
     <string name="Specialization">Specialization</string>
     <string name="Register">Register</string>
     <string name="appIcon">appIcon</string>
-    <string name="AppName">Android Studio</string>
-    <string name="applicazionePerConsulenza">android.studio@android.com</string>
+    <string name="AppName">ConsultationApp</string>
+    <string name="applicazionePerConsulenza">Consultation App</string>
     <string name="large_text">Large Text</string>
+    <string name="availability">Availability</string>
+    <string name="new_requests">New requests</string>
+    <string name="history">Activity history</string>
+    <string name="received_request">Received request</string>
+    <string name="account">Account</string>
+    <string name="rating">Rating</string>
+    <string name="personal">Personal</string>
+    <string name="Personal">Personal</string>
+    <string name="title_activity_disponibilita">Disponibilita</string>
+    <string name="title_activity_nuove_richieste">NuoveRichieste</string>
+    <string name="title_activity_storico_attivita">StoricoAttivita</string>
+    <string name="title_activity_richieste_ricevute">RichiesteRicevute</string>
+    <string name="title_activity_profilo">Profilo</string>
+    <string name="title_activity_valutazione">Valutazione</string>
+    <string name="title_activity_storico_attivta">StoricoAttivta</string>
 </resources>

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Login"
+            android:name=".Inizio"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +22,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Register" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Registrazione" />
         <activity
-            android:name=".Main2Activity"
+            android:name=".Appuntamenti"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".InsertActivity"
+            android:name=".InserimentoDisponibilita"
             android:label="@string/title_activity_insert"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Disponibilita"
+            android:label="@string/title_activity_disponibilita"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".StoricoAttivita"
+            android:label="@string/title_activity_storico_attivta"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NuoveRichieste"
+            android:label="@string/title_activity_nuove_richieste"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RichiesteRicevute"
+            android:label="@string/title_activity_richieste_ricevute"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Valutazione"
+            android:label="@string/title_activity_valutazione"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Profilo"
+            android:label="@string/title_activity_profilo"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -49,7 +49,7 @@ public class ListAdapter extends ArrayAdapter<Utente> {
             ratingBar.setRating((float) 2.5);
             ratingBar.setEnabled(false);
             if (data != null) {
-                data.setText("12/12/1223");
+                data.setText("12/12/2016");
             }
 
             if (nomeCognome != null) {

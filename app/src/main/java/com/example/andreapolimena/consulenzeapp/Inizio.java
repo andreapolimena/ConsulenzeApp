@@ -38,7 +38,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -66,7 +66,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_inizio);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -88,7 +88,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             @Override
             public void onClick(View view) {
                 //attemptLogin();
-                Intent intent = new Intent(Login.this, Main2Activity.class);
+                Intent intent = new Intent(Inizio.this, Appuntamenti.class);
                 startActivity(intent);
             }
         });
@@ -98,7 +98,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             @Override
             public void onClick(View v) {
                 Intent mRegisterIntent;
-                mRegisterIntent = new Intent(Login.this, Register.class);
+                mRegisterIntent = new Intent(Inizio.this, Registrazione.class);
                 startActivity(mRegisterIntent);
             }
         });
@@ -286,7 +286,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(Login.this,
+                new ArrayAdapter<>(Inizio.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);

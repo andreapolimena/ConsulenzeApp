@@ -30,4 +30,12 @@
     <string name="AppName">ConsulenzeApp</string>
     <string name="appIcon">Icona App</string>
     <string name="applicazionePerConsulenza">Applicazione per Consulenza</string>
+    <string name="account">Profilo</string>
+    <string name="availability">Disponibilità</string>
+    <string name="history">Storico attività</string>
+    <string name="new_requests">Nuove richieste</string>
+    <string name="rating">Valutazione</string>
+    <string name="received_request">Richieste ricevute</string>
+    <string name="Personal">Personale</string>
+    <string name="personal">Personale</string>
 </resources>

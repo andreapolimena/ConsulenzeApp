@@ -1,20 +1,18 @@
 package com.example.andreapolimena.consulenzeapp;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class Register extends AppCompatActivity {
+public class Registrazione extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_registrazione);
 
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.register);
@@ -23,8 +21,8 @@ public class Register extends AppCompatActivity {
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Register.this, "Registrazione avvenuta", Toast.LENGTH_LONG).show();
-                Intent login = new Intent(Register.this, Login.class);
+                Toast.makeText(Registrazione.this, "Registrazione avvenuta", Toast.LENGTH_LONG).show();
+                Intent login = new Intent(Registrazione.this, Inizio.class);
                 startActivity(login);
             }
         });
