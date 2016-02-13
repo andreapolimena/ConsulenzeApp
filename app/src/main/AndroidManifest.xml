@@ -55,7 +55,8 @@
             android:name=".Profilo"
             android:label="@string/title_activity_profilo"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".InserimentoRichiesta"></activity>
+        <activity android:name=".InserimentoRichiesta" />
+        <activity android:name=".InserimentoRichiesta2"></activity>
     </application>
 
 </manifest>

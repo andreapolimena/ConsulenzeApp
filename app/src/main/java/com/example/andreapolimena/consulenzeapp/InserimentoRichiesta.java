@@ -1,5 +1,7 @@
 package com.example.andreapolimena.consulenzeapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,5 +36,27 @@ public class InserimentoRichiesta extends AppCompatActivity {
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.riga_specializ, R.id.textViewList, listSpec);
         listView.setAdapter(listAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent;
+                switch(position){
+                    case 0:
+                        intent = new Intent(InserimentoRichiesta.this,InserimentoRichiesta2.class);
+                        startActivity(intent);
+                        break;
+                    case 1:
+                        intent = new Intent(InserimentoRichiesta.this,InserimentoRichiesta2.class);
+                        startActivity(intent);
+                        break;
+                    case 2:
+                        intent = new Intent(InserimentoRichiesta.this,InserimentoRichiesta2.class);
+                        startActivity(intent);
+                        break;
+                    //add more if you have more items in listview
+                    //0 is the first item 1 second and so on...
+                }
+            }
+        });
     }
 }

@@ -58,4 +58,5 @@
     <string name="not_repeat">Non ripetere</string>
     <string name="insert_request">Inserisci richiesta</string>
     <string name="select_spec">Seleziona la specializzazione di cui vuoi chiedere consulenza:</string>
+    <string name="send_request">Invia richiesta</string>
 </resources>

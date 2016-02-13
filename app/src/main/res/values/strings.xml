@@ -63,4 +63,5 @@
     <string name="repeat_2_week">Repeat 2 week</string>
     <string name="insert_request">Insert Request</string>
     <string name="select_spec">Select the specialization:</string>
+    <string name="send_request">Send request</string>
 </resources>

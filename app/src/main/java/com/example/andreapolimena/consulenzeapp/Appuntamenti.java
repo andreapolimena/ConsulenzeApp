@@ -24,7 +24,6 @@ public class Appuntamenti extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appuntamenti);
-
         ListView listView = (ListView) findViewById(R.id.listView2);
         List listUtente = new LinkedList();
         listUtente.add(new Utente());
