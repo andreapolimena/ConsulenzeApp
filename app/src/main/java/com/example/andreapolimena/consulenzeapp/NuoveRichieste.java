@@ -1,5 +1,6 @@
 package com.example.andreapolimena.consulenzeapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -80,18 +81,24 @@ public class NuoveRichieste extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.availability) {
+            Intent intent = new Intent(NuoveRichieste.this, Disponibilita.class);
+            startActivity(intent);
+        } else if (id == R.id.new_request) {
+            Intent intent = new Intent(NuoveRichieste.this, NuoveRichieste.class);
+            startActivity(intent);
+        } else if (id == R.id.history) {
+            Intent intent = new Intent(NuoveRichieste.this, StoricoAttivita.class);
+            startActivity(intent);
+        } else if (id == R.id.received_request) {
+            Intent intent = new Intent(NuoveRichieste.this, RichiesteRicevute.class);
+            startActivity(intent);
+        } else if (id == R.id.account) {
+            Intent intent = new Intent(NuoveRichieste.this, Profilo.class);
+            startActivity(intent);
+        } else if (id == R.id.rating) {
+            Intent intent = new Intent(NuoveRichieste.this, Valutazione.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
