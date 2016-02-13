@@ -97,8 +97,9 @@ public class Appuntamenti extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if(id== R.id.dates){
 
-        if (id == R.id.availability) {
+        }else if (id == R.id.availability) {
             Intent intent = new Intent(Appuntamenti.this, Disponibilita.class);
             startActivity(intent);
         } else if (id == R.id.new_request) {

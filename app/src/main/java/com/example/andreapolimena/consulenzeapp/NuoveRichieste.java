@@ -28,8 +28,8 @@ public class NuoveRichieste extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(NuoveRichieste.this, InserimentoRichiesta.class);
+                startActivity(intent);
             }
         });
 
@@ -81,12 +81,14 @@ public class NuoveRichieste extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.availability) {
+        if(id==R.id.dates){
+            Intent intent = new Intent(NuoveRichieste.this, Appuntamenti.class);
+            startActivity(intent);
+        }else if (id == R.id.availability) {
             Intent intent = new Intent(NuoveRichieste.this, Disponibilita.class);
             startActivity(intent);
         } else if (id == R.id.new_request) {
-            Intent intent = new Intent(NuoveRichieste.this, NuoveRichieste.class);
-            startActivity(intent);
+
         } else if (id == R.id.history) {
             Intent intent = new Intent(NuoveRichieste.this, StoricoAttivita.class);
             startActivity(intent);

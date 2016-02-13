@@ -38,4 +38,24 @@
     <string name="received_request">Richieste ricevute</string>
     <string name="Personal">Personale</string>
     <string name="personal">Personale</string>
+    <string name="title_activity_disponibilita">Disponibilità</string>
+    <string name="title_activity_nuove_richieste">Nuove Richieste</string>
+    <string name="title_activity_profilo">Profilo</string>
+    <string name="title_activity_richieste_ricevute">Richieste Ricevute</string>
+    <string name="title_activity_storico_attivita">Storico Attività</string>
+    <string name="title_activity_storico_attivta">Storico Attività</string>
+    <string name="title_activity_valutazione">Valutazione</string>
+    <string name="select_date">Seleziona il giorno</string>
+    <string name="select_hour">Seleziona l\'orario</string>
+    <string name="insert_password">Inserisci una password</string>
+    <string name="insert_password_again">Inserisci nuovamente la password</string>
+    <string name="dates">Appuntamenti</string>
+    <string name="select_beginning">Seleziona ora di inizio</string>
+    <string name="select_ending">Seleziona ora di fine</string>
+    <string name="insert">Inserisci</string>
+    <string name="repeat_2_week">Ripeti ogni 2 settimane</string>
+    <string name="repeat_week">Ripeti ogni settimana</string>
+    <string name="not_repeat">Non ripetere</string>
+    <string name="insert_request">Inserisci richiesta</string>
+    <string name="select_spec">Seleziona la specializzazione di cui vuoi chiedere consulenza:</string>
 </resources>

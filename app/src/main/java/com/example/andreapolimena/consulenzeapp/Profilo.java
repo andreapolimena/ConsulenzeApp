@@ -81,7 +81,10 @@ public class Profilo extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.availability) {
+        if(id==R.id.dates){
+            Intent intent = new Intent(Profilo.this, Appuntamenti.class);
+            startActivity(intent);
+        }else if (id == R.id.availability) {
             Intent intent = new Intent(Profilo.this, Disponibilita.class);
             startActivity(intent);
         } else if (id == R.id.new_request) {
@@ -94,8 +97,7 @@ public class Profilo extends AppCompatActivity
             Intent intent = new Intent(Profilo.this, RichiesteRicevute.class);
             startActivity(intent);
         } else if (id == R.id.account) {
-            Intent intent = new Intent(Profilo.this, Profilo.class);
-            startActivity(intent);
+            
         } else if (id == R.id.rating) {
             Intent intent = new Intent(Profilo.this, Valutazione.class);
             startActivity(intent);

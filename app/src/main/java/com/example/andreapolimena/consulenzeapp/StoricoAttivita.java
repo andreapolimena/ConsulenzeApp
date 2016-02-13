@@ -81,15 +81,17 @@ public class StoricoAttivita extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.availability) {
+        if(id==R.id.dates){
+            Intent intent = new Intent(StoricoAttivita.this, Appuntamenti.class);
+            startActivity(intent);
+        }else if (id == R.id.availability) {
             Intent intent = new Intent(StoricoAttivita.this, Disponibilita.class);
             startActivity(intent);
         } else if (id == R.id.new_request) {
             Intent intent = new Intent(StoricoAttivita.this, NuoveRichieste.class);
             startActivity(intent);
         } else if (id == R.id.history) {
-            Intent intent = new Intent(StoricoAttivita.this, StoricoAttivita.class);
-            startActivity(intent);
+
         } else if (id == R.id.received_request) {
             Intent intent = new Intent(StoricoAttivita.this, RichiesteRicevute.class);
             startActivity(intent);

@@ -28,8 +28,8 @@ public class Disponibilita extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(Disponibilita.this, InserimentoDisponibilita.class);
+                startActivity(intent);
             }
         });
 
@@ -80,10 +80,11 @@ public class Disponibilita extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.availability) {
-            Intent intent = new Intent(Disponibilita.this, Disponibilita.class);
+        if(id==R.id.dates){
+            Intent intent = new Intent(Disponibilita.this, Appuntamenti.class);
             startActivity(intent);
+        }else if (id == R.id.availability) {
+
         } else if (id == R.id.new_request) {
             Intent intent = new Intent(Disponibilita.this, NuoveRichieste.class);
             startActivity(intent);

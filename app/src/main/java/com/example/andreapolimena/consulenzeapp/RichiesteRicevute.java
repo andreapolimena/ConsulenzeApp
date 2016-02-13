@@ -81,7 +81,10 @@ public class RichiesteRicevute extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.availability) {
+        if(id==R.id.dates){
+            Intent intent = new Intent(RichiesteRicevute.this, Appuntamenti.class);
+            startActivity(intent);
+        }else if (id == R.id.availability) {
             Intent intent = new Intent(RichiesteRicevute.this, Disponibilita.class);
             startActivity(intent);
         } else if (id == R.id.new_request) {
@@ -91,8 +94,7 @@ public class RichiesteRicevute extends AppCompatActivity
             Intent intent = new Intent(RichiesteRicevute.this, StoricoAttivita.class);
             startActivity(intent);
         } else if (id == R.id.received_request) {
-            Intent intent = new Intent(RichiesteRicevute.this, RichiesteRicevute.class);
-            startActivity(intent);
+
         } else if (id == R.id.account) {
             Intent intent = new Intent(RichiesteRicevute.this, Profilo.class);
             startActivity(intent);

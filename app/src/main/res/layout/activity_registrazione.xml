@@ -39,7 +39,9 @@
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/editText"
-                android:hint="@string/name" />
+                android:hint="@string/name"
+                android:autoText="true"
+                android:maxLines="1" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -78,6 +80,22 @@
                 android:ems="10"
                 android:id="@+id/editText6"
                 android:hint="@string/secondary_specializations" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/editText8"
+                android:hint="@string/insert_password" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/editText9"
+                android:hint="@string/insert_password_again" />
 
             <Button
                 android:layout_width="match_parent"

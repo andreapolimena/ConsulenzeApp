@@ -3,6 +3,9 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/dates"
+            android:title="@string/dates" />
+        <item
             android:id="@+id/availability"
             android:title="@string/availability" />
         <item

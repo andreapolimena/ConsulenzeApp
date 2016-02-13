@@ -81,7 +81,10 @@ public class Valutazione extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.availability) {
+        if(id==R.id.dates){
+            Intent intent = new Intent(Valutazione.this, Appuntamenti.class);
+            startActivity(intent);
+        }else if (id == R.id.availability) {
             Intent intent = new Intent(Valutazione.this, Disponibilita.class);
             startActivity(intent);
         } else if (id == R.id.new_request) {
@@ -97,10 +100,8 @@ public class Valutazione extends AppCompatActivity
             Intent intent = new Intent(Valutazione.this, Profilo.class);
             startActivity(intent);
         } else if (id == R.id.rating) {
-            Intent intent = new Intent(Valutazione.this, Valutazione.class);
-            startActivity(intent);
-        }
 
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
