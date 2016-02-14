@@ -25,8 +25,8 @@ public class InserimentoRichiesta2 extends AppCompatActivity {
         listUtente.add(new Utente());
         listUtente.add(new Utente());
         listUtente.add(new Utente());
-        ListAdapter listAdapter = new ListAdapter(this, R.layout.item_registrazione2, listUtente);
-        listView.setAdapter(listAdapter);
+        ListAdapterRichieste listAdapterRichieste = new ListAdapterRichieste(this, R.layout.item_registrazione2, listUtente);
+        listView.setAdapter(listAdapterRichieste);
 
     }
 }

@@ -14,7 +14,7 @@ public class FeedUtenteDbHelper extends SQLiteOpenHelper {
         private static final String COMMA_SEP = ",";
         private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FeedUtente.FeedEntry.TABLE_NAME + " (" +
-                    FeedUtente.FeedEntry._ID + " INTEGER PRIMARY KEY," +
+                    FeedUtente.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     FeedUtente.FeedEntry.COLUMN_NAME_EMAIL + TEXT_TYPE + COMMA_SEP +
                     FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD + TEXT_TYPE +
             " );";
