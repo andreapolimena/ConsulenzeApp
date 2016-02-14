@@ -3,8 +3,10 @@ package com.example.andreapolimena.consulenzeapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,6 +70,58 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inizio);
+
+        FeedUtenteDbHelper mDbHelper = new FeedUtenteDbHelper(getBaseContext());
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+// Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(FeedUtente.FeedEntry._ID, 1);
+        values.put(FeedUtente.FeedEntry.COLUMN_NAME_EMAIL, "andreapolimena@gmail.com");
+        values.put(FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD, "password");
+
+// Insert the new row, returning the primary key value of the new row
+        long newRowId;
+        newRowId = db.insert(
+                FeedUtente.FeedEntry.TABLE_NAME,
+                FeedUtente.FeedEntry.COLUMN_NAME_NULLABLE,
+                values);
+
+        db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                FeedUtente.FeedEntry._ID,
+                FeedUtente.FeedEntry.COLUMN_NAME_EMAIL,
+                FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD,
+        };
+
+// How you want the results sorted in the resulting Cursor
+        String sortOrder =
+                FeedUtente.FeedEntry._ID + " DESC";
+
+        String selection=null;
+        String[] selectionArgs=null;
+        Cursor cursor = db.query(
+                FeedUtente.FeedEntry.TABLE_NAME,          // The table to query
+                projection,                               // The columns to return
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // The sort order
+        );
+
+        String email = null;
+        String password = null;
+
+        cursor.moveToFirst();
+        long itemId = cursor.getLong(
+                cursor.getColumnIndexOrThrow(FeedUtente.FeedEntry._ID)
+        );
+        email=cursor.getString(cursor.getColumnIndexOrThrow(FeedUtente.FeedEntry.COLUMN_NAME_EMAIL));
+        password=cursor.getString(cursor.getColumnIndexOrThrow(FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD));
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -102,6 +157,10 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                 startActivity(mRegisterIntent);
             }
         });
+
+        mEmailView.setText(email);
+        mPasswordView.setText(password);
+
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
