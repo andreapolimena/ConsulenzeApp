@@ -16,5 +16,10 @@ public class FeedUtente {
         public static final String TABLE_NAME = "Utente";
         public static final String COLUMN_NAME_EMAIL = "email";
         public static final String COLUMN_NAME_PASSWORD = "password";
+        public static final String COLUMN_NAME_NOME = "nome";
+        public static final String COLUMN_NAME_COGNOME = "cognome";
+        public static final String COLUMN_NAME_INDIRIZZO = "indirizzo";
+        public static final String COLUMN_NAME_SPEC_PRINC = "spec_princ";
+        public static final String COLUMN_NAME_SPEC_SECOND = "spec_second";
     }
 }

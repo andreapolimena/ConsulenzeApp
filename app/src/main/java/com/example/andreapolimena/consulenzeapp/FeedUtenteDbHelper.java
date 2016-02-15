@@ -16,13 +16,19 @@ public class FeedUtenteDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + FeedUtente.FeedEntry.TABLE_NAME + " (" +
                     FeedUtente.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     FeedUtente.FeedEntry.COLUMN_NAME_EMAIL + TEXT_TYPE + COMMA_SEP +
-                    FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD + TEXT_TYPE +
+                    FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD + TEXT_TYPE + COMMA_SEP +
+                    FeedUtente.FeedEntry.COLUMN_NAME_NOME + TEXT_TYPE + COMMA_SEP +
+                    FeedUtente.FeedEntry.COLUMN_NAME_COGNOME + TEXT_TYPE + COMMA_SEP +
+                    FeedUtente.FeedEntry.COLUMN_NAME_INDIRIZZO + TEXT_TYPE + COMMA_SEP +
+                    FeedUtente.FeedEntry.COLUMN_NAME_SPEC_PRINC + TEXT_TYPE + COMMA_SEP +
+                    FeedUtente.FeedEntry.COLUMN_NAME_SPEC_SECOND + TEXT_TYPE +
+
             " );";
 
-    private static final String SQL_DELETE_ENTRIES =
+        private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedUtente.FeedEntry.TABLE_NAME;
         public static final int DATABASE_VERSION = 1;
-        public static final String DATABASE_NAME = "FeedReader.db";
+        public static final String DATABASE_NAME = "FeedReader2.db";
 
         public FeedUtenteDbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -29,9 +29,11 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLClientInfoException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,74 +71,17 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inizio);
-
-        FeedUtenteDbHelper mDbHelper = new FeedUtenteDbHelper(getBaseContext());
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        String[] projection = {
-                FeedUtente.FeedEntry._ID,
-                FeedUtente.FeedEntry.COLUMN_NAME_EMAIL,
-                FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD,
-        };
-
-// How you want the results sorted in the resulting Cursor
-        String sortOrder = FeedUtente.FeedEntry._ID + " ASC";
-
-        String selection=null;
-        //String[] selectionArgs=null;
-        Cursor cursor = db.query(
-                FeedUtente.FeedEntry.TABLE_NAME,          // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                null,                                     // The values for the WHERE clause selectionArgs
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                      // The sort order
-        );
-/*
-        db = mDbHelper.getWritableDatabase();
-
-// Create a new map of values, where column names are the keys
-        ContentValues values = new ContentValues();
-        values.put(FeedUtente.FeedEntry.COLUMN_NAME_EMAIL, "andreapolimena@gmail.com");
-        values.put(FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD, "password");
-
-// Insert the new row, returning the primary key value of the new row
-        try{
-            db.insert(
-                    FeedUtente.FeedEntry.TABLE_NAME,
-                    FeedUtente.FeedEntry.COLUMN_NAME_NULLABLE,
-                    values);
-        }catch (Exception e){
-            Log.d("Insertfailed", "Insert Failed");
+        SQLiteDatabase db=null;
+        FeedUtenteDbHelper helper = new FeedUtenteDbHelper(getApplicationContext());
+        db=helper.getReadableDatabase();
+        Cursor cursor =db.query(FeedUtente.FeedEntry.TABLE_NAME,new String[]{FeedUtente.FeedEntry.COLUMN_NAME_EMAIL, FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD},null,null,null,null,null);
+        cursor.moveToNext();
+        if(cursor==null)
+            Toast.makeText(Inizio.this,"NULL",Toast.LENGTH_SHORT).show();
+            else{
+            Toast.makeText(Inizio.this, cursor.getString(cursor.getColumnIndex(FeedUtente.FeedEntry.COLUMN_NAME_EMAIL)), Toast.LENGTH_SHORT).show();
         }
-        values.clear();
 
-        values.put(FeedUtente.FeedEntry.COLUMN_NAME_EMAIL, "prova@prova.com");
-        values.put(FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD, "password");
-
-        try{
-            db.insert(
-                    FeedUtente.FeedEntry.TABLE_NAME,
-                    FeedUtente.FeedEntry.COLUMN_NAME_NULLABLE,
-                    values);
-        }catch (Exception e){
-            Log.d("Insertfailed", "Insert Failed");
-        }
-*/
-        db = mDbHelper.getReadableDatabase();
-
-
-        String email = null;
-        String password = null;
-        cursor.moveToFirst();
-        while(cursor.moveToNext()) {
-            cursor.getLong(
-                    cursor.getColumnIndexOrThrow(FeedUtente.FeedEntry._ID)
-            );
-            email = cursor.getString(cursor.getColumnIndexOrThrow(FeedUtente.FeedEntry.COLUMN_NAME_EMAIL));
-            password = cursor.getString(cursor.getColumnIndexOrThrow(FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD));
-        }
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -157,12 +102,12 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Inizio.this, Appuntamenti.class);
+                Intent intent=new Intent(Inizio.this,Appuntamenti.class);
                 startActivity(intent);
             }
         });
 
-        Button mRegisterButton = (Button)findViewById(R.id.button);
+        Button mRegisterButton = (Button) findViewById(R.id.button);
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,9 +116,6 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                 startActivity(mRegisterIntent);
             }
         });
-
-        mEmailView.setText(email);
-        mPasswordView.setText(password);
 
 
         mLoginFormView = findViewById(R.id.login_form);

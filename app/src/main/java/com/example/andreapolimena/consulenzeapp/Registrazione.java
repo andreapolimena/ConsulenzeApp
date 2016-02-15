@@ -1,6 +1,8 @@
 package com.example.andreapolimena.consulenzeapp;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -45,6 +47,20 @@ public class Registrazione extends AppCompatActivity {
                 }else if(password.getText().toString().equals(passwordTemp.getText().toString())==false || password.getText().toString().isEmpty()==true){
                     Toast.makeText(Registrazione.this, "Password non inserita correttamente, prego reinserirlo", Toast.LENGTH_LONG).show();
                 }else{
+                    FeedUtenteDbHelper mDbHelper = new FeedUtenteDbHelper(getBaseContext());
+                    SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+                    ContentValues values = new ContentValues();
+                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_NOME, nome.getText().toString());
+                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_COGNOME, cognome.getText().toString());
+                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_EMAIL, email.getText().toString());
+                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_INDIRIZZO, indirizzo.getText().toString());
+                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_SPEC_PRINC, primaSpec.getText().toString());
+                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_SPEC_SECOND, secondaSpec.getText().toString());
+                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD, password.getText().toString());
+
+                    db.insertOrThrow(FeedUtente.FeedEntry.TABLE_NAME, FeedUtente.FeedEntry.COLUMN_NAME_NULLABLE, values);
+
                     Toast.makeText(Registrazione.this, "Registrazione avvenuta", Toast.LENGTH_LONG).show();
                     Intent login = new Intent(Registrazione.this, Inizio.class);
                     startActivity(login);
