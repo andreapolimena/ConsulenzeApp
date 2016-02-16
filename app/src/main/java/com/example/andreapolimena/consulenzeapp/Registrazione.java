@@ -47,19 +47,19 @@ public class Registrazione extends AppCompatActivity {
                 }else if(password.getText().toString().equals(passwordTemp.getText().toString())==false || password.getText().toString().isEmpty()==true){
                     Toast.makeText(Registrazione.this, "Password non inserita correttamente, prego reinserirlo", Toast.LENGTH_LONG).show();
                 }else{
-                    FeedUtenteDbHelper mDbHelper = new FeedUtenteDbHelper(getBaseContext());
+                    UtenteDbHelper mDbHelper = new UtenteDbHelper(getBaseContext());
                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
                     ContentValues values = new ContentValues();
-                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_NOME, nome.getText().toString());
-                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_COGNOME, cognome.getText().toString());
-                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_EMAIL, email.getText().toString());
-                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_INDIRIZZO, indirizzo.getText().toString());
-                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_SPEC_PRINC, primaSpec.getText().toString());
-                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_SPEC_SECOND, secondaSpec.getText().toString());
-                    values.put(FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD, password.getText().toString());
+                    values.put(UtenteDb.Utente.COLUMN_NAME_NOME, nome.getText().toString());
+                    values.put(UtenteDb.Utente.COLUMN_NAME_COGNOME, cognome.getText().toString());
+                    values.put(UtenteDb.Utente.COLUMN_NAME_EMAIL, email.getText().toString());
+                    values.put(UtenteDb.Utente.COLUMN_NAME_INDIRIZZO, indirizzo.getText().toString());
+                    values.put(UtenteDb.Utente.COLUMN_NAME_SPEC_PRINC, primaSpec.getText().toString());
+                    values.put(UtenteDb.Utente.COLUMN_NAME_SPEC_SECOND, secondaSpec.getText().toString());
+                    values.put(UtenteDb.Utente.COLUMN_NAME_PASSWORD, password.getText().toString());
 
-                    db.insertOrThrow(FeedUtente.FeedEntry.TABLE_NAME, FeedUtente.FeedEntry.COLUMN_NAME_NULLABLE, values);
+                    db.insertOrThrow(UtenteDb.Utente.TABLE_NAME, UtenteDb.Utente.COLUMN_NAME_NULLABLE, values);
 
                     Toast.makeText(Registrazione.this, "Registrazione avvenuta", Toast.LENGTH_LONG).show();
                     Intent login = new Intent(Registrazione.this, Inizio.class);

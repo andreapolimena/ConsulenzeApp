@@ -93,7 +93,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
             @Override
             public void onClick(View view) {
                 SQLiteDatabase db=null;
-                FeedUtenteDbHelper helper = new FeedUtenteDbHelper(getApplicationContext());
+                UtenteDbHelper helper = new UtenteDbHelper(getApplicationContext());
                 db=helper.getReadableDatabase();
                 String sSelect ="select * from Utente";
                 Cursor cursor = db.rawQuery(sSelect,null);

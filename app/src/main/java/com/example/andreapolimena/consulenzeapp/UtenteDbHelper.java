@@ -3,34 +3,33 @@ package com.example.andreapolimena.consulenzeapp;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by andreapolimena on 14/02/16.
  */
-public class FeedUtenteDbHelper extends SQLiteOpenHelper {
+public class UtenteDbHelper extends SQLiteOpenHelper {
         // If you change the database schema, you must increment the database version.
         private static final String TEXT_TYPE = " TEXT";
         private static final String COMMA_SEP = ",";
         private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + FeedUtente.FeedEntry.TABLE_NAME + " (" +
-                    FeedUtente.FeedEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    FeedUtente.FeedEntry.COLUMN_NAME_EMAIL + TEXT_TYPE + COMMA_SEP +
-                    FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD + TEXT_TYPE + COMMA_SEP +
-                    FeedUtente.FeedEntry.COLUMN_NAME_NOME + TEXT_TYPE + COMMA_SEP +
-                    FeedUtente.FeedEntry.COLUMN_NAME_COGNOME + TEXT_TYPE + COMMA_SEP +
-                    FeedUtente.FeedEntry.COLUMN_NAME_INDIRIZZO + TEXT_TYPE + COMMA_SEP +
-                    FeedUtente.FeedEntry.COLUMN_NAME_SPEC_PRINC + TEXT_TYPE + COMMA_SEP +
-                    FeedUtente.FeedEntry.COLUMN_NAME_SPEC_SECOND + TEXT_TYPE +
+            "CREATE TABLE " + UtenteDb.Utente.TABLE_NAME + " (" +
+                    UtenteDb.Utente._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    UtenteDb.Utente.COLUMN_NAME_EMAIL + TEXT_TYPE + COMMA_SEP +
+                    UtenteDb.Utente.COLUMN_NAME_PASSWORD + TEXT_TYPE + COMMA_SEP +
+                    UtenteDb.Utente.COLUMN_NAME_NOME + TEXT_TYPE + COMMA_SEP +
+                    UtenteDb.Utente.COLUMN_NAME_COGNOME + TEXT_TYPE + COMMA_SEP +
+                    UtenteDb.Utente.COLUMN_NAME_INDIRIZZO + TEXT_TYPE + COMMA_SEP +
+                    UtenteDb.Utente.COLUMN_NAME_SPEC_PRINC + TEXT_TYPE + COMMA_SEP +
+                    UtenteDb.Utente.COLUMN_NAME_SPEC_SECOND + TEXT_TYPE +
 
             " );";
 
         private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + FeedUtente.FeedEntry.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + UtenteDb.Utente.TABLE_NAME;
         public static final int DATABASE_VERSION = 1;
         public static final String DATABASE_NAME = "FeedReader2.db";
 
-        public FeedUtenteDbHelper(Context context) {
+        public UtenteDbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
         public void onCreate(SQLiteDatabase db) {
