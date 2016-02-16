@@ -95,7 +95,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                 SQLiteDatabase db=null;
                 FeedUtenteDbHelper helper = new FeedUtenteDbHelper(getApplicationContext());
                 db=helper.getReadableDatabase();
-                String sSelect ="select * from Utente";
+                String sSelect ="select password,email from Utente";
                 Cursor cursor = db.rawQuery(sSelect,null);
                 boolean accesso=false;
                 String passworddb=null;
