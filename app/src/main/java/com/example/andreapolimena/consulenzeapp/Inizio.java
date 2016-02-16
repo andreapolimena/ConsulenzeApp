@@ -71,16 +71,6 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inizio);
-        SQLiteDatabase db=null;
-        FeedUtenteDbHelper helper = new FeedUtenteDbHelper(getApplicationContext());
-        db=helper.getReadableDatabase();
-        Cursor cursor =db.query(FeedUtente.FeedEntry.TABLE_NAME,new String[]{FeedUtente.FeedEntry.COLUMN_NAME_EMAIL, FeedUtente.FeedEntry.COLUMN_NAME_PASSWORD},null,null,null,null,null);
-        cursor.moveToNext();
-        if(cursor==null)
-            Toast.makeText(Inizio.this,"NULL",Toast.LENGTH_SHORT).show();
-            else{
-            Toast.makeText(Inizio.this, cursor.getString(cursor.getColumnIndex(FeedUtente.FeedEntry.COLUMN_NAME_EMAIL)), Toast.LENGTH_SHORT).show();
-        }
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -98,12 +88,38 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        final Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Inizio.this,Appuntamenti.class);
-                startActivity(intent);
+                SQLiteDatabase db=null;
+                FeedUtenteDbHelper helper = new FeedUtenteDbHelper(getApplicationContext());
+                db=helper.getReadableDatabase();
+                String sSelect ="select * from Utente";
+                Cursor cursor = db.rawQuery(sSelect,null);
+                boolean accesso=false;
+                String passworddb=null;
+                String emaildb=null;
+
+                while (cursor.moveToNext()){
+                    passworddb=cursor.getString(cursor.getColumnIndex("password"));
+                    emaildb=cursor.getString(cursor.getColumnIndex("email"));
+                    Log.d("pass",passworddb);
+                    Log.d("email",emaildb);
+
+                    if (passworddb.equals(mPasswordView.getText().toString())&& emaildb.equals(mEmailView.getText().toString())){
+                        accesso=true;
+                    }
+
+                }
+                db.close();
+                cursor.close();
+                if(accesso==true) {
+                    Intent intent = new Intent(Inizio.this, Appuntamenti.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(Inizio.this,"Credenziali errate",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
