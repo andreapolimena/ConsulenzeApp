@@ -2,6 +2,8 @@ package com.example.andreapolimena.consulenzeapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,16 +24,23 @@ public class InserimentoRichiesta extends AppCompatActivity {
 
         final ListView listView = (ListView) findViewById(R.id.listView);
         ArrayList<String> listSpec = new ArrayList<String>();
-        listSpec.add("Specializzazione 1");
-        listSpec.add("Specializzazione 2");
-        listSpec.add("Specializzazione 3");
-        listSpec.add("Specializzazione 4");
-        listSpec.add("Specializzazione 5");
-        listSpec.add("Specializzazione 6");
-        listSpec.add("Specializzazione 7");
-        listSpec.add("Specializzazione 8");
-        listSpec.add("Specializzazione 8");
-        listSpec.add("Specializzazione 8");
+
+        UtenteDbHelper utenteDbHelper = new UtenteDbHelper(InserimentoRichiesta.this);
+        SQLiteDatabase database = utenteDbHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select " + UtenteDb.Utente.COLUMN_NAME_SPEC_PRINC + " from Utente", null);
+
+        if(cursor!=null && cursor.moveToFirst()){
+            while (!cursor.isAfterLast()){
+                String spec = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_SPEC_PRINC));
+                if(!listSpec.contains(spec))
+                listSpec.add(spec);
+                cursor.moveToNext();
+            }
+        }
+
+        cursor.close();
+        database.close();
+        utenteDbHelper.close();
 
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.riga_specializ, R.id.textViewList, listSpec);
         listView.setAdapter(listAdapter);
