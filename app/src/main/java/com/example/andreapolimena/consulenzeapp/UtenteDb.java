@@ -21,5 +21,9 @@ public class UtenteDb {
         public static final String COLUMN_NAME_INDIRIZZO = "indirizzo";
         public static final String COLUMN_NAME_SPEC_PRINC = "spec_princ";
         public static final String COLUMN_NAME_SPEC_SECOND = "spec_second";
+        public static final String TABLE_APPUNTAMENTI = "Appuntamenti";
+        public static final String COLUMN_NAME_DATE ="data";
+        public static final String COLUMN_NAME_ORA="ora";
+        public static final String TABLE_DISPONIBILITA= "Disponibilita";
     }
 }

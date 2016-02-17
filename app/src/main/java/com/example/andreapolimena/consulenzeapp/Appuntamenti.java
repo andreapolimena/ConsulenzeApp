@@ -1,6 +1,8 @@
 package com.example.andreapolimena.consulenzeapp;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,19 +27,38 @@ public class Appuntamenti extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appuntamenti);
+
+        UtenteDbHelper utenteDbHelper = new UtenteDbHelper(this);
+        SQLiteDatabase database = utenteDbHelper.getReadableDatabase();
+
+        //database = utenteDbHelper.getWritableDatabase();
+        //database.execSQL("insert into Appuntamenti values(1, 'andrea', 'polimena', 'infor', '2016-01-01','20:00:00');");
+
+        Cursor cursor = database.rawQuery("select nome, cognome, spec_princ from Appuntamenti where email=='"+Inizio.utenteLoggato+"'", null);
+        List listAppuntamentiClass = new LinkedList();
+        if(cursor!=null && cursor.moveToFirst()) {
+            while(!cursor.isAfterLast()) {
+                String nome = "";
+                String cognome = "";
+                String spec = "";
+                int giorno = 0;
+                int mese = 0;
+                int anno = 0;
+                int ora = 0;
+                int min = 0;
+                nome = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_NOME));
+                cognome = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_COGNOME));
+                spec = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_SPEC_PRINC));
+                Toast.makeText(Appuntamenti.this, "prova:" + nome + cognome + spec, Toast.LENGTH_SHORT);
+                listAppuntamentiClass.add(new AppuntamentiClass(nome, cognome, spec, giorno, mese, anno, ora, min));
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
         ListView listView = (ListView) findViewById(R.id.listView2);
-        List listUtente = new LinkedList();
-        listUtente.add(new Utente());
-        listUtente.add(new Utente());
-        listUtente.add(new Utente());
-        listUtente.add(new Utente());
-        listUtente.add(new Utente());
-        listUtente.add(new Utente());
-        listUtente.add(new Utente());
-        listUtente.add(new Utente());
-        listUtente.add(new Utente());
-        ListAdapter listAdapter = new com.example.andreapolimena.consulenzeapp.ListAdapter(this, R.layout.list_item, listUtente);
-        listView.setAdapter(listAdapter);
+        ListAdapterAppuntamentiClass listAdapterAppuntamentiClass = new ListAdapterAppuntamentiClass(this, R.layout.list_item, listAppuntamentiClass);
+
+        listView.setAdapter(listAdapterAppuntamentiClass);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

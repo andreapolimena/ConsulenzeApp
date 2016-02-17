@@ -13,6 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Disponibilita extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,6 +31,28 @@ public class Disponibilita extends AppCompatActivity
         setContentView(R.layout.activity_disponibilita);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        ListView listView = (ListView) findViewById(R.id.listView4);
+        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+        Map<String, String> datum = new HashMap<String, String>(2);
+        datum.put("First Line", "Testo primo rigo");
+        datum.put("Second Line", "TEsto Seconda riga");
+        data.add(datum);
+
+        datum.put("First Line", "Altro rigo");
+        datum.put("Second Line", "seconda linea");
+        data.add(datum);
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(
+                this,
+                data,
+                android.R.layout.simple_list_item_2,
+                new String[]{"First Line", "Second Line"},
+                new int[]{android.R.id.text1, android.R.id.text2}
+        );
+
+        listView.setAdapter(simpleAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,10 +110,10 @@ public class Disponibilita extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if(id==R.id.dates){
+        if (id == R.id.dates) {
             Intent intent = new Intent(Disponibilita.this, Appuntamenti.class);
             startActivity(intent);
-        }else if (id == R.id.availability) {
+        } else if (id == R.id.availability) {
 
         } else if (id == R.id.new_request) {
             Intent intent = new Intent(Disponibilita.this, NuoveRichieste.class);

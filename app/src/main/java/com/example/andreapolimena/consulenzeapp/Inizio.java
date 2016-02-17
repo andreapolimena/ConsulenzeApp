@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -29,7 +28,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +64,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    public static String utenteLoggato="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +93,10 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
             public void onClick(View view) {
                 SQLiteDatabase db=null;
                 UtenteDbHelper helper = new UtenteDbHelper(getApplicationContext());
+
+                //db=helper.getWritableDatabase();
+                //helper.onUpgrade(db,2,3);
+
                 db=helper.getReadableDatabase();
                 String sSelect ="select * from Utente";
                 Cursor cursor = db.rawQuery(sSelect,null);
@@ -101,7 +104,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                 String passworddb=null;
                 String emaildb=null;
 
-                while (cursor.moveToNext()){
+                while (cursor.moveToNext() && !accesso){
                     passworddb=cursor.getString(cursor.getColumnIndex("password"));
                     emaildb=cursor.getString(cursor.getColumnIndex("email"));
                     Log.d("pass",passworddb);
@@ -114,7 +117,10 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                 }
                 db.close();
                 cursor.close();
+
                 if(accesso==true) {
+                    utenteLoggato=emaildb;
+                    Toast.makeText(Inizio.this, "Loggato come: "+utenteLoggato,Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Inizio.this, Appuntamenti.class);
                     startActivity(intent);
                 }else{
