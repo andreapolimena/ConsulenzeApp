@@ -31,6 +31,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.sql.SQLClientInfoException;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,10 +70,21 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     private View mLoginFormView;
     public static String utenteLoggato="";
 
+    private Socket client;
+    private PrintWriter printwriter;
+    private EditText textField;
+    private Button button;
+    private String messsage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inizio);
+
+        //COMUNICAZIONE CON SERVER
+        messsage = "Prova Server"; // get the text message on the text field
+        SendMessage sendMessageTask = new SendMessage();
+        sendMessageTask.execute();
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -396,5 +411,27 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
             showProgress(false);
         }
     }
+
+    private class SendMessage extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                client = new Socket("10.0.2.2", 4444); // connect to the server
+                printwriter = new PrintWriter(client.getOutputStream(), true);
+                printwriter.write(messsage); // write the message to output stream
+                printwriter.flush();
+                printwriter.close();
+                client.close(); // closing the connection
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+    }
+
 }
 

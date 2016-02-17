@@ -19,6 +19,7 @@ import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,27 +34,11 @@ public class Disponibilita extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         ListView listView = (ListView) findViewById(R.id.listView4);
+        List listDisponibilita = new LinkedList();
+        listDisponibilita.add(new DisponibilitaClass("Andrea","Polimena", "Info",12,12,2016,11,0,12,0));
+        ListAdapterDisponibilita listAdapterDisponibilita = new ListAdapterDisponibilita(this,R.layout.list_item_disponib,listDisponibilita);
+        listView.setAdapter(listAdapterDisponibilita);
 
-
-        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-        Map<String, String> datum = new HashMap<String, String>(2);
-        datum.put("First Line", "Testo primo rigo");
-        datum.put("Second Line", "TEsto Seconda riga");
-        data.add(datum);
-
-        datum.put("First Line", "Altro rigo");
-        datum.put("Second Line", "seconda linea");
-        data.add(datum);
-
-        SimpleAdapter simpleAdapter = new SimpleAdapter(
-                this,
-                data,
-                android.R.layout.simple_list_item_2,
-                new String[]{"First Line", "Second Line"},
-                new int[]{android.R.id.text1, android.R.id.text2}
-        );
-
-        listView.setAdapter(simpleAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

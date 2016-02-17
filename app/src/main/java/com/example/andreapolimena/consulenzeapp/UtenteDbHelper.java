@@ -34,6 +34,16 @@ public class UtenteDbHelper extends SQLiteOpenHelper {
                     UtenteDb.Utente.COLUMN_NAME_DATE +DATA_TYPE+ COMMA_SEP +
                     UtenteDb.Utente.COLUMN_NAME_ORA +TIME_TYPE+
                     " );";
+    private static final String SQL_CREATE_TABLE_3 =
+            "CREATE TABLE "+ UtenteDb.Utente.TABLE_DISPONIBILITA+" ("+
+                    UtenteDb.Utente._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    UtenteDb.Utente.COLUMN_NAME_NOME+TEXT_TYPE+COMMA_SEP+
+                    UtenteDb.Utente.COLUMN_NAME_COGNOME+TEXT_TYPE+COMMA_SEP+
+                    UtenteDb.Utente.COLUMN_NAME_SPEC_PRINC+TEXT_TYPE+COMMA_SEP+
+                    UtenteDb.Utente.COLUMN_NAME_DATE+DATA_TYPE+COMMA_SEP+
+                    UtenteDb.Utente.COLUMN_NAME_ORA+TIME_TYPE+COMMA_SEP+
+                    UtenteDb.Utente.COLUMN_NAME_ORAFINE+TIME_TYPE+
+                    " );";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + UtenteDb.Utente.TABLE_NAME;
@@ -57,7 +67,9 @@ public class UtenteDbHelper extends SQLiteOpenHelper {
         db.execSQL("insert into Appuntamenti values(null,'prova@prova.it','Elia','Marasco','Informatica','2016-02-24','11:30:00');");
         db.execSQL("insert into Appuntamenti values(null,'a@a','Andrea','Polimena','Informatica','2016-02-24','10:30:00');");
         db.execSQL("insert into Appuntamenti values(null,'a@a','Elia','Marasco','Informatica','2016-02-25','11:30:00');");
-
+        db.execSQL(SQL_CREATE_TABLE_3);
+        db.execSQL("insert into Disponibilita values(null, 'Andrea', 'Polimena','Informatica','2016-02-25', '10:00:00','11:00:00');");
+        db.execSQL("insert into Disponibilita values(null, 'Elia', 'Marasco','Informatica','2016-02-26', '12:00:00','13:00:00');");
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
