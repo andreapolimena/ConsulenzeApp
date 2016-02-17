@@ -54,13 +54,13 @@ public class InserimentoRichiesta extends AppCompatActivity {
                 switch(position){
                     case 0:
                         Spec = listSpec.get(position);
-                        Toast.makeText(InserimentoRichiesta.this, Spec, Toast.LENGTH_LONG).show();
+
                         intent = new Intent(InserimentoRichiesta.this,InserimentoRichiesta2.class);
                         startActivity(intent);
                         break;
                     default:
                         Spec = listSpec.get(position);
-                        Toast.makeText(InserimentoRichiesta.this, Spec, Toast.LENGTH_LONG).show();
+
                         intent = new Intent(InserimentoRichiesta.this,InserimentoRichiesta2.class);
                         startActivity(intent);
                         break;

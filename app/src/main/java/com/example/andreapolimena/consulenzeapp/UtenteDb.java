@@ -25,5 +25,6 @@ public class UtenteDb {
         public static final String COLUMN_NAME_DATE ="data";
         public static final String COLUMN_NAME_ORA="ora";
         public static final String TABLE_DISPONIBILITA= "Disponibilita";
+        public static final String COLUMN_NAME_ORAFINE="ora_fine";
     }
 }

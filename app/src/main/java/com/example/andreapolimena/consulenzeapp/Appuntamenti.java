@@ -34,13 +34,15 @@ public class Appuntamenti extends AppCompatActivity
         //database = utenteDbHelper.getWritableDatabase();
         //database.execSQL("insert into Appuntamenti values(1, 'andrea', 'polimena', 'infor', '2016-01-01','20:00:00');");
 
-        Cursor cursor = database.rawQuery("select nome, cognome, spec_princ from Appuntamenti where email=='"+Inizio.utenteLoggato+"'", null);
+        Cursor cursor = database.rawQuery("select nome, cognome, spec_princ, data, ora from Appuntamenti where email=='"+Inizio.utenteLoggato+"'", null);
         List listAppuntamentiClass = new LinkedList();
         if(cursor!=null && cursor.moveToFirst()) {
             while(!cursor.isAfterLast()) {
                 String nome = "";
                 String cognome = "";
                 String spec = "";
+                String data = "";
+                String time ="";
                 int giorno = 0;
                 int mese = 0;
                 int anno = 0;
@@ -49,12 +51,26 @@ public class Appuntamenti extends AppCompatActivity
                 nome = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_NOME));
                 cognome = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_COGNOME));
                 spec = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_SPEC_PRINC));
-                Toast.makeText(Appuntamenti.this, "prova:" + nome + cognome + spec, Toast.LENGTH_SHORT);
+                data = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_DATE));
+                time = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_ORA));
+
+                String[] parts = data.split("-");
+                String[] parts2 = time.split(":");
+
+                giorno = Integer.parseInt(parts[2]);
+                mese = Integer.parseInt(parts[1]);
+                anno = Integer.parseInt(parts[0]);
+                ora = Integer.parseInt(parts2[0]);
+                min = Integer.parseInt(parts2[1]);
+
                 listAppuntamentiClass.add(new AppuntamentiClass(nome, cognome, spec, giorno, mese, anno, ora, min));
                 cursor.moveToNext();
             }
             cursor.close();
         }
+        database.close();
+        utenteDbHelper.close();
+
         ListView listView = (ListView) findViewById(R.id.listView2);
         ListAdapterAppuntamentiClass listAdapterAppuntamentiClass = new ListAdapterAppuntamentiClass(this, R.layout.list_item, listAppuntamentiClass);
 

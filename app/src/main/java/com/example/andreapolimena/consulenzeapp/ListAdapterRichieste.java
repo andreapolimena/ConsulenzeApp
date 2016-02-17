@@ -50,6 +50,9 @@ public class ListAdapterRichieste extends ArrayAdapter<Utente> {
                 @Override
                 public void onClick(View v) {
 
+                    Toast.makeText(v.getContext(), "Richiesta inviata correttamente",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(v.getContext(), NuoveRichieste.class);
+                    v.getContext().startActivity(intent);
                 }
             });
 

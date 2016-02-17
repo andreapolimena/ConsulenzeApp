@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.LinkedList;
@@ -45,7 +46,6 @@ public class InserimentoRichiesta2 extends AppCompatActivity {
         cursor.close();
         database.close();
         utenteDbHelper.close();
-
         ListAdapterRichieste listAdapterRichieste = new ListAdapterRichieste(this, R.layout.item_registrazione2, listUtente);
         listView.setAdapter(listAdapterRichieste);
 

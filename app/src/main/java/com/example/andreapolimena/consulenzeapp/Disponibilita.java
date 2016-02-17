@@ -32,8 +32,9 @@ public class Disponibilita extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         ListView listView = (ListView) findViewById(R.id.listView4);
+
+
         List<Map<String, String>> data = new ArrayList<Map<String, String>>();
         Map<String, String> datum = new HashMap<String, String>(2);
         datum.put("First Line", "Testo primo rigo");

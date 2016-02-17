@@ -57,6 +57,7 @@ public class UtenteDbHelper extends SQLiteOpenHelper {
         db.execSQL("insert into Appuntamenti values(null,'prova@prova.it','Elia','Marasco','Informatica','2016-02-24','11:30:00');");
         db.execSQL("insert into Appuntamenti values(null,'a@a','Andrea','Polimena','Informatica','2016-02-24','10:30:00');");
         db.execSQL("insert into Appuntamenti values(null,'a@a','Elia','Marasco','Informatica','2016-02-25','11:30:00');");
+
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
