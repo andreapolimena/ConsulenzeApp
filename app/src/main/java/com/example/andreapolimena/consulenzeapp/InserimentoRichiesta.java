@@ -15,6 +15,8 @@ import java.util.List;
 
 public class InserimentoRichiesta extends AppCompatActivity {
 
+    public static String Spec;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +25,7 @@ public class InserimentoRichiesta extends AppCompatActivity {
         actionBar.setTitle(R.string.insert_request);
 
         final ListView listView = (ListView) findViewById(R.id.listView);
-        ArrayList<String> listSpec = new ArrayList<String>();
+        final ArrayList<String> listSpec = new ArrayList<String>();
 
         UtenteDbHelper utenteDbHelper = new UtenteDbHelper(InserimentoRichiesta.this);
         SQLiteDatabase database = utenteDbHelper.getReadableDatabase();
@@ -51,14 +53,14 @@ public class InserimentoRichiesta extends AppCompatActivity {
                 Intent intent;
                 switch(position){
                     case 0:
+                        Spec = listSpec.get(position);
+                        Toast.makeText(InserimentoRichiesta.this, Spec, Toast.LENGTH_LONG).show();
                         intent = new Intent(InserimentoRichiesta.this,InserimentoRichiesta2.class);
                         startActivity(intent);
                         break;
-                    case 1:
-                        intent = new Intent(InserimentoRichiesta.this,InserimentoRichiesta2.class);
-                        startActivity(intent);
-                        break;
-                    case 2:
+                    default:
+                        Spec = listSpec.get(position);
+                        Toast.makeText(InserimentoRichiesta.this, Spec, Toast.LENGTH_LONG).show();
                         intent = new Intent(InserimentoRichiesta.this,InserimentoRichiesta2.class);
                         startActivity(intent);
                         break;
