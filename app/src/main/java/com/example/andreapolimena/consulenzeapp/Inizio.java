@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -31,11 +32,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.sql.SQLClientInfoException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +85,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    public static String utenteLoggato="";
+    public static String utenteLoggato = "";
 
     private Socket client;
     private PrintWriter printwriter;
@@ -80,11 +97,6 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inizio);
-
-        //COMUNICAZIONE CON SERVER
-        messsage = "Prova Server"; // get the text message on the text field
-        SendMessage sendMessageTask = new SendMessage();
-        sendMessageTask.execute();
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -106,40 +118,97 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                SQLiteDatabase db=null;
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject json = new JSONObject();
+                            String serverUrl = "http://andreapolimena2.altervista.org/script_php/Accesso.php";
+                            URL url = new URL(serverUrl);
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setReadTimeout(10000);
+                            conn.setConnectTimeout(15000);
+                            conn.setRequestMethod("POST");
+                            conn.setDoOutput(true);
+
+                            ContentValues values = new ContentValues();
+
+                            String key = "email";
+                            String value = mEmailView.getText().toString();
+                            values.put(key, value);
+                            json.put(key, value);
+
+                            key = "pass";
+                            value = mPasswordView.getText().toString();
+                            values.put(key, value);
+                            json.put(key, value);
+
+                            OutputStream os = conn.getOutputStream();
+                            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                            String data = json.toString();
+
+                            writer.write(data);
+                            writer.flush();
+                            writer.close();
+                            conn.connect();
+
+                            InputStreamReader isw = new InputStreamReader(conn.getInputStream());
+                            int r;
+                            char c;
+                            String response = "";
+                            while ((r = isw.read()) != -1) {
+                                // int to character
+                                c = (char) r;
+                                response += c;
+                            }
+
+                            System.out.println(response);
+
+                            isw.close();
+                        } catch (Exception e) {
+                            Intent intent = new Intent(getApplicationContext(), NessunaConnessione.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
+
+                thread.start();
+
+                SQLiteDatabase db;
                 UtenteDbHelper helper = new UtenteDbHelper(getApplicationContext());
 
                 //db=helper.getWritableDatabase();
                 //helper.onUpgrade(db,2,3);
 
-                db=helper.getReadableDatabase();
-                String sSelect ="select * from Utente";
-                Cursor cursor = db.rawQuery(sSelect,null);
-                boolean accesso=false;
-                String passworddb=null;
-                String emaildb=null;
+                db = helper.getReadableDatabase();
+                String sSelect = "select * from Utente";
+                Cursor cursor = db.rawQuery(sSelect, null);
+                boolean accesso = false;
+                String passworddb;
+                String emaildb = null;
 
-                while (cursor.moveToNext() && !accesso){
-                    passworddb=cursor.getString(cursor.getColumnIndex("password"));
-                    emaildb=cursor.getString(cursor.getColumnIndex("email"));
-                    Log.d("pass",passworddb);
-                    Log.d("email",emaildb);
+                while (cursor.moveToNext() && !accesso) {
+                    passworddb = cursor.getString(cursor.getColumnIndex("password"));
+                    emaildb = cursor.getString(cursor.getColumnIndex("email"));
+                    Log.d("pass", passworddb);
+                    Log.d("email", emaildb);
 
-                    if (passworddb.equals(mPasswordView.getText().toString())&& emaildb.equals(mEmailView.getText().toString())){
-                        accesso=true;
+                    if (passworddb.equals(mPasswordView.getText().toString()) && emaildb.equals(mEmailView.getText().toString())) {
+                        accesso = true;
                     }
 
                 }
                 db.close();
                 cursor.close();
 
-                if(accesso==true) {
-                    utenteLoggato=emaildb;
-                    Toast.makeText(Inizio.this, "Loggato come: "+utenteLoggato,Toast.LENGTH_SHORT).show();
+                if (accesso) {
+                    utenteLoggato = emaildb;
+                    Toast.makeText(Inizio.this, "Loggato come: " + utenteLoggato, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Inizio.this, Appuntamenti.class);
                     startActivity(intent);
-                }else{
-                    Toast.makeText(Inizio.this,"Credenziali errate",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Inizio.this, "Credenziali errate", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -320,7 +389,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
+        List<String> emails = new ArrayList<String>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
@@ -338,7 +407,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(Inizio.this,
+                new ArrayAdapter<String>(Inizio.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
@@ -410,27 +479,6 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
             mAuthTask = null;
             showProgress(false);
         }
-    }
-
-    private class SendMessage extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                client = new Socket("10.0.2.2", 4444); // connect to the server
-                printwriter = new PrintWriter(client.getOutputStream(), true);
-                printwriter.write(messsage); // write the message to output stream
-                printwriter.flush();
-                printwriter.close();
-                client.close(); // closing the connection
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
     }
 
 }

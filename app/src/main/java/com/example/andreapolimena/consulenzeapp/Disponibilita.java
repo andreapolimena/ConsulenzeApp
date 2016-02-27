@@ -1,5 +1,6 @@
 package com.example.andreapolimena.consulenzeapp;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -32,6 +41,64 @@ public class Disponibilita extends AppCompatActivity
         setContentView(R.layout.activity_disponibilita);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject json = new JSONObject();
+                    String serverUrl = "http://andreapolimena2.altervista.org/script_php/Accesso.php";
+                    URL url = new URL(serverUrl);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setReadTimeout(10000);
+                    conn.setConnectTimeout(15000);
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+
+                    ContentValues values = new ContentValues();
+
+                    String key = "email";
+                    String value = "email";
+                    values.put(key, value);
+                    json.put(key, value);
+
+                    key = "pass";
+                    value = "emaoil";
+                    values.put(key, value);
+                    json.put(key, value);
+
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                    String data = json.toString();
+
+                    writer.write(data);
+                    writer.flush();
+                    writer.close();
+                    conn.connect();
+
+                    InputStreamReader isw = new InputStreamReader(conn.getInputStream());
+                    int r;
+                    char c;
+                    String response = "";
+                    while ((r = isw.read()) != -1) {
+                        // int to character
+                        c = (char) r;
+                        response += c;
+                    }
+
+                    System.out.println(response);
+
+                    isw.close();
+                } catch (Exception e) {
+                    Intent intent = new Intent(getApplicationContext(), NessunaConnessione.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        thread.start();
+
 
         ListView listView = (ListView) findViewById(R.id.listView4);
         List listDisponibilita = new LinkedList();

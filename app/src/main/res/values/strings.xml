@@ -66,4 +66,5 @@
     <string name="send_request">Send request</string>
     <string name="update_fields">Update fields</string>
     <string name="update">Update</string>
+    <string name="NoConnection">Ops!! Maybe you forget to turn on data connection.</string>
 </resources>

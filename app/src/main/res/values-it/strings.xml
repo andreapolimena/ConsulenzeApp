@@ -61,4 +61,5 @@
     <string name="send_request">Invia richiesta</string>
     <string name="update">Aggiorna</string>
     <string name="update_fields">Modifica i campi</string>
+    <string name="NoConnection">Ops! Forse hai dimenticato di accendere la connessione dati.</string>
 </resources>
