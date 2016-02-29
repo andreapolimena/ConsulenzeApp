@@ -1,5 +1,6 @@
 package com.example.andreapolimena.consulenzeapp;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,11 +18,23 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Appuntamenti extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private  List listAppuntamentiClass = new LinkedList();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +47,8 @@ public class Appuntamenti extends AppCompatActivity
         //database = utenteDbHelper.getWritableDatabase();
         //database.execSQL("insert into Appuntamenti values(1, 'andrea', 'polimena', 'infor', '2016-01-01','20:00:00');");
 
-        Cursor cursor = database.rawQuery("select nome, cognome, spec_princ, data, ora from Appuntamenti where email=='"+Inizio.utenteLoggato+"'", null);
-        List listAppuntamentiClass = new LinkedList();
+        /*Cursor cursor = database.rawQuery("select nome, cognome, spec_princ, data, ora from Appuntamenti where email=='"+Inizio.utenteLoggato+"'", null);
+
         if(cursor!=null && cursor.moveToFirst()) {
             while(!cursor.isAfterLast()) {
                 String nome = "";
@@ -70,6 +83,67 @@ public class Appuntamenti extends AppCompatActivity
         }
         database.close();
         utenteDbHelper.close();
+*/
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject json = new JSONObject();
+                    String serverUrl = "http://andreapolimena2.altervista.org/script_php/Appuntamenti.php";
+                    URL url = new URL(serverUrl);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setReadTimeout(10000);
+                    conn.setConnectTimeout(15000);
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+
+
+                    String key = "email";
+                    String value = Inizio.utenteLoggato;
+                    json.put(key, value);
+
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                    String data = json.toString();
+
+                    writer.write(data);
+                    writer.flush();
+                    writer.close();
+                    conn.connect();
+
+                    InputStreamReader isw = new InputStreamReader(conn.getInputStream());
+                    int r;
+                    char c;
+                    String response = "";
+                    while ((r = isw.read()) != -1) {
+                        // int to character
+                        c = (char) r;
+                        response += c;
+                    }
+                    JSONObject jsonObject = new JSONObject(response);
+                    int k = 0;
+                    while (k<jsonObject.length()){
+                        listAppuntamentiClass.add(new AppuntamentiClass(
+                                jsonObject.getJSONObject(((Integer)k).toString()).getString("nome"),
+                                jsonObject.getJSONObject(((Integer)k).toString()).getString("cognome"),
+                                jsonObject.getJSONObject(((Integer)k).toString()).getString("specializzazione"),
+                                jsonObject.getJSONObject(((Integer)k).toString()).getString("data_appuntamento"),
+                                jsonObject.getJSONObject(((Integer)k).toString()).getString("ora_inizio")
+                        ));
+                        //System.out.println(jsonObject.getJSONObject(((Integer)k).toString()).getString("nome"));
+                        k++;
+                    }
+
+
+                    isw.close();
+                } catch (Exception e) {
+                    Intent intent = new Intent(getApplicationContext(), NessunaConnessione.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        thread.start();
 
         ListView listView = (ListView) findViewById(R.id.listView2);
         ListAdapterAppuntamentiClass listAdapterAppuntamentiClass = new ListAdapterAppuntamentiClass(this, R.layout.list_item, listAppuntamentiClass);

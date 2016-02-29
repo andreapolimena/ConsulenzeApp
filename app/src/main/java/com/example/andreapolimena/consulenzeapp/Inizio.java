@@ -45,9 +45,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
@@ -67,7 +71,6 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -85,7 +88,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    public static String utenteLoggato = "";
+    protected static String utenteLoggato = "";
 
     private Socket client;
     private PrintWriter printwriter;
@@ -133,7 +136,6 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                             conn.setDoOutput(true);
 
                             ContentValues values = new ContentValues();
-
                             String key = "email";
                             String value = mEmailView.getText().toString();
                             values.put(key, value);
@@ -191,9 +193,6 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                 while (cursor.moveToNext() && !accesso) {
                     passworddb = cursor.getString(cursor.getColumnIndex("password"));
                     emaildb = cursor.getString(cursor.getColumnIndex("email"));
-                    Log.d("pass", passworddb);
-                    Log.d("email", emaildb);
-
                     if (passworddb.equals(mPasswordView.getText().toString()) && emaildb.equals(mEmailView.getText().toString())) {
                         accesso = true;
                     }
@@ -203,6 +202,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                 cursor.close();
 
                 if (accesso) {
+
                     utenteLoggato = emaildb;
                     Toast.makeText(Inizio.this, "Loggato come: " + utenteLoggato, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Inizio.this, Appuntamenti.class);

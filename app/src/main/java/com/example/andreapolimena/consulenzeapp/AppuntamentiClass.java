@@ -31,37 +31,18 @@ public class AppuntamentiClass {
         return date;
     }
 
-    public void setDate(int giorno, int mese, int anno) {
-        if (giorno < 10) {
-            this.date = "0" + ((Integer) giorno).toString();
-        } else{
-            this.date = ((Integer) giorno).toString();
-        }
-        this.date=this.date+"/";
-        if (mese<10){
-            this.date=this.date+"0"+((Integer) mese).toString();
-        }else {
-            this.date=this.date+((Integer) mese).toString();
-        }
-        this.date=this.date+"/"+((Integer) anno).toString();
+    public void setDate(String date) {
+        this.date=date;
     }
 
     public String getOra() {
         return ora;
     }
 
-    public void setOra(int ora, int minuti) {
-        if(ora<10){
-            this.ora ="0"+((Integer)ora).toString();
-        }else {
-            this.ora =((Integer)ora).toString();
-        }
-        this.ora =this.ora +":";
-        if(minuti<10){
-            this.ora =this.ora+"0"+((Integer)minuti).toString();
-        }else {
-            this.ora =this.ora+((Integer)minuti).toString();
-        }
+    public void setOra(String ora) {
+
+        this.ora =ora;
+
     }
 
     public String getSpec() {
@@ -72,12 +53,12 @@ public class AppuntamentiClass {
         this.spec = spec;
     }
 
-    public AppuntamentiClass(String nome, String cognome, String spec, int giorno, int mese, int anno, int ora, int min) {
+    public AppuntamentiClass(String nome, String cognome, String spec, String date, String ora) {
         setNome(nome);
         setCognome(cognome);
         setSpec(spec);
-        setDate(giorno, mese,anno);
-        setOra(ora,min);
+        setDate(date);
+        setOra(ora);
     }
 
 }
