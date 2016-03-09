@@ -3,7 +3,7 @@ package com.example.andreapolimena.consulenzeapp;
 /**
  * Created by andreapolimena on 16/02/16.
  */
-public class DisponibilitaClass {
+public class InserimentoRichiestaClass {
 
     public String nome = "";
     public String cognome = "";
@@ -75,7 +75,7 @@ public class DisponibilitaClass {
         this.spec = spec;
     }
 
-    public DisponibilitaClass(String nome, String cognome, String spec, String date, String ora, String oraFine) {
+    public InserimentoRichiestaClass(String nome, String cognome, String spec, String date, String ora, String oraFine) {
         setNome(nome);
         setCognome(cognome);
         setSpec(spec);

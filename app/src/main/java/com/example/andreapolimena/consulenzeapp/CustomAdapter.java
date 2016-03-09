@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Created by andreapolimena on 10/02/16.
  */
@@ -20,7 +17,7 @@ public class CustomAdapter extends ArrayAdapter<Utente>{
 
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView=inflater.inflate(R.layout.list_item, null);
+        convertView=inflater.inflate(R.layout.list_item_appuntamenti, null);
         TextView nome = (TextView)convertView.findViewById(R.id.textView);
         TextView cognome = (TextView)convertView.findViewById(R.id.textView2);
         TextView email = (TextView)convertView.findViewById(R.id.textView3);

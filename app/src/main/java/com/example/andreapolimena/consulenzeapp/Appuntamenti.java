@@ -1,9 +1,6 @@
 package com.example.andreapolimena.consulenzeapp;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -16,9 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -33,16 +28,36 @@ import java.util.List;
 public class Appuntamenti extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private  List listAppuntamentiClass = new LinkedList();
-
+    private List listAppuntamentiClass = new LinkedList();
+    public boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appuntamenti);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        UtenteDbHelper utenteDbHelper = new UtenteDbHelper(this);
-        SQLiteDatabase database = utenteDbHelper.getReadableDatabase();
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Appuntamenti.this, InserimentoRichiesta.class);
+                startActivity(intent);
+            }
+        });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //UtenteDbHelper utenteDbHelper = new UtenteDbHelper(this);
+        //SQLiteDatabase database = utenteDbHelper.getReadableDatabase();
 
         //database = utenteDbHelper.getWritableDatabase();
         //database.execSQL("insert into Appuntamenti values(1, 'andrea', 'polimena', 'infor', '2016-01-01','20:00:00');");
@@ -84,6 +99,8 @@ public class Appuntamenti extends AppCompatActivity
         database.close();
         utenteDbHelper.close();
 */
+        ListView listView = (ListView) findViewById(R.id.listView2);
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -120,22 +137,22 @@ public class Appuntamenti extends AppCompatActivity
                         c = (char) r;
                         response += c;
                     }
+
                     JSONObject jsonObject = new JSONObject(response);
                     int k = 0;
-                    while (k<jsonObject.length()){
+                    while (k < jsonObject.length()) {
                         listAppuntamentiClass.add(new AppuntamentiClass(
-                                jsonObject.getJSONObject(((Integer)k).toString()).getString("nome"),
-                                jsonObject.getJSONObject(((Integer)k).toString()).getString("cognome"),
-                                jsonObject.getJSONObject(((Integer)k).toString()).getString("specializzazione"),
-                                jsonObject.getJSONObject(((Integer)k).toString()).getString("data_appuntamento"),
-                                jsonObject.getJSONObject(((Integer)k).toString()).getString("ora_inizio")
+                                jsonObject.getJSONObject(((Integer) k).toString()).getString("nome"),
+                                jsonObject.getJSONObject(((Integer) k).toString()).getString("cognome"),
+                                jsonObject.getJSONObject(((Integer) k).toString()).getString("specializzazione"),
+                                jsonObject.getJSONObject(((Integer) k).toString()).getString("data_appuntamento"),
+                                jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_inizio")
                         ));
-                        //System.out.println(jsonObject.getJSONObject(((Integer)k).toString()).getString("nome"));
                         k++;
                     }
-
-
+                    flag=true;
                     isw.close();
+                    conn.disconnect();
                 } catch (Exception e) {
                     Intent intent = new Intent(getApplicationContext(), NessunaConnessione.class);
                     startActivity(intent);
@@ -145,30 +162,15 @@ public class Appuntamenti extends AppCompatActivity
 
         thread.start();
 
-        ListView listView = (ListView) findViewById(R.id.listView2);
-        ListAdapterAppuntamentiClass listAdapterAppuntamentiClass = new ListAdapterAppuntamentiClass(this, R.layout.list_item, listAppuntamentiClass);
+        while (!flag){
+            listView.invalidateViews();
+        }
 
+
+        ListAdapterAppuntamentiClass listAdapterAppuntamentiClass = new ListAdapterAppuntamentiClass(this, R.layout.list_item_appuntamenti, listAppuntamentiClass);
         listView.setAdapter(listAdapterAppuntamentiClass);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Appuntamenti.this, InserimentoDisponibilita.class);
-                startActivity(intent);
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        listView.invalidateViews();
+        listView.refreshDrawableState();
     }
 
     @Override
@@ -208,9 +210,9 @@ public class Appuntamenti extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if(id== R.id.dates){
+        if (id == R.id.dates) {
 
-        }else if (id == R.id.availability) {
+        } else if (id == R.id.availability) {
             Intent intent = new Intent(Appuntamenti.this, Disponibilita.class);
             startActivity(intent);
         } else if (id == R.id.new_request) {

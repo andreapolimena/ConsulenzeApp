@@ -55,6 +55,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
+import java.sql.Connection;
 import java.sql.SQLClientInfoException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -83,6 +84,8 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
      */
     private UserLoginTask mAuthTask = null;
 
+    private boolean accesso = false;
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -90,22 +93,18 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
     private View mLoginFormView;
     protected static String utenteLoggato = "";
 
-    private Socket client;
-    private PrintWriter printwriter;
-    private EditText textField;
-    private Button button;
-    private String messsage;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inizio);
-
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
         mPasswordView = (EditText) findViewById(R.id.password);
+
+        mEmailView.setText("a@a");
+        mPasswordView.setText("a");
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -121,7 +120,6 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -135,15 +133,13 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                             conn.setRequestMethod("POST");
                             conn.setDoOutput(true);
 
-                            ContentValues values = new ContentValues();
                             String key = "email";
+                            String email = mEmailView.getText().toString();
                             String value = mEmailView.getText().toString();
-                            values.put(key, value);
                             json.put(key, value);
 
                             key = "pass";
                             value = mPasswordView.getText().toString();
-                            values.put(key, value);
                             json.put(key, value);
 
                             OutputStream os = conn.getOutputStream();
@@ -153,63 +149,40 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                             writer.write(data);
                             writer.flush();
                             writer.close();
+
+
                             conn.connect();
 
                             InputStreamReader isw = new InputStreamReader(conn.getInputStream());
-                            int r;
-                            char c;
-                            String response = "";
-                            while ((r = isw.read()) != -1) {
-                                // int to character
-                                c = (char) r;
-                                response += c;
-                            }
 
-                            System.out.println(response);
+                            StringBuilder sb = new StringBuilder();
+                            for (int c; (c = isw.read()) >= 0;)
+                                sb.append((char)c);
+                            String response = sb.toString();
 
                             isw.close();
+                            conn.disconnect();
+
+                            if(response.toString().endsWith("Accesso effettuato")){
+                                accesso=true;
+                                Inizio.utenteLoggato=email;
+                                Log.e("Stampa", response);
+                            }
                         } catch (Exception e) {
                             Intent intent = new Intent(getApplicationContext(), NessunaConnessione.class);
                             startActivity(intent);
                         }
+
+                        if (!Inizio.utenteLoggato.isEmpty()) {
+                            //Toast.makeText(getApplicationContext(), "Loggato come: " + Inizio.utenteLoggato, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Inizio.this, Appuntamenti.class);
+                            startActivity(intent);
+                        } else {
+                            //Toast.makeText(getApplicationContext(), "Credenziali errate", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
-
                 thread.start();
-
-                SQLiteDatabase db;
-                UtenteDbHelper helper = new UtenteDbHelper(getApplicationContext());
-
-                //db=helper.getWritableDatabase();
-                //helper.onUpgrade(db,2,3);
-
-                db = helper.getReadableDatabase();
-                String sSelect = "select * from Utente";
-                Cursor cursor = db.rawQuery(sSelect, null);
-                boolean accesso = false;
-                String passworddb;
-                String emaildb = null;
-
-                while (cursor.moveToNext() && !accesso) {
-                    passworddb = cursor.getString(cursor.getColumnIndex("password"));
-                    emaildb = cursor.getString(cursor.getColumnIndex("email"));
-                    if (passworddb.equals(mPasswordView.getText().toString()) && emaildb.equals(mEmailView.getText().toString())) {
-                        accesso = true;
-                    }
-
-                }
-                db.close();
-                cursor.close();
-
-                if (accesso) {
-
-                    utenteLoggato = emaildb;
-                    Toast.makeText(Inizio.this, "Loggato come: " + utenteLoggato, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Inizio.this, Appuntamenti.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(Inizio.this, "Credenziali errate", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 

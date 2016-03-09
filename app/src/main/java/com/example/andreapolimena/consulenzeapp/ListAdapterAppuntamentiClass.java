@@ -1,8 +1,6 @@
 package com.example.andreapolimena.consulenzeapp;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +31,7 @@ public class ListAdapterAppuntamentiClass extends ArrayAdapter<AppuntamentiClass
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.list_item, null);
+            v = vi.inflate(R.layout.list_item_appuntamenti, null);
         }
 
         AppuntamentiClass p = getItem(position);

@@ -2,9 +2,11 @@ package com.example.andreapolimena.consulenzeapp;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,13 +20,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +40,10 @@ import java.util.Map;
 public class Disponibilita extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public ListView listView;
+    public ArrayList<DisponibilitaClass> listDisp = new ArrayList<DisponibilitaClass>();
+    public boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +51,14 @@ public class Disponibilita extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        listView = (ListView) findViewById(R.id.listView4);
 
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     JSONObject json = new JSONObject();
-                    String serverUrl = "http://andreapolimena2.altervista.org/script_php/Accesso.php";
+                    String serverUrl = "http://andreapolimena2.altervista.org/script_php/Disponibilita.php";
                     URL url = new URL(serverUrl);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setReadTimeout(10000);
@@ -56,16 +66,8 @@ public class Disponibilita extends AppCompatActivity
                     conn.setRequestMethod("POST");
                     conn.setDoOutput(true);
 
-                    ContentValues values = new ContentValues();
-
                     String key = "email";
-                    String value = "email";
-                    values.put(key, value);
-                    json.put(key, value);
-
-                    key = "pass";
-                    value = "emaoil";
-                    values.put(key, value);
+                    String value = Inizio.utenteLoggato;
                     json.put(key, value);
 
                     OutputStream os = conn.getOutputStream();
@@ -76,7 +78,6 @@ public class Disponibilita extends AppCompatActivity
                     writer.flush();
                     writer.close();
                     conn.connect();
-
                     InputStreamReader isw = new InputStreamReader(conn.getInputStream());
                     int r;
                     char c;
@@ -86,26 +87,51 @@ public class Disponibilita extends AppCompatActivity
                         c = (char) r;
                         response += c;
                     }
+                    JSONObject jsonObject = new JSONObject(response);
+                    int k = 0;
+                    while (k < jsonObject.length()) {
+                        String nome = jsonObject.getJSONObject(((Integer) k).toString()).getString("nome");
+                        String cognome = jsonObject.getJSONObject(((Integer) k).toString()).getString("cognome");
+                        String spec = jsonObject.getJSONObject(((Integer) k).toString()).getString("specializzazione");
+                        String date = jsonObject.getJSONObject(((Integer) k).toString()).getString("data_inizio");
+                        String oraInizio = jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_inizio");
+                        String oraFine = jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_fine");
 
-                    System.out.println(response);
+                        DisponibilitaClass disponibilitaClass = new DisponibilitaClass(
+                                nome,
+                                cognome,
+                                spec,
+                                date,
+                                oraInizio,
+                                oraFine
+                        );
 
+                        if (!listDisp.contains(disponibilitaClass))
+                            listDisp.add(disponibilitaClass);
+                        k++;
+                    }
+                    flag=true;
                     isw.close();
-                } catch (Exception e) {
-                    Intent intent = new Intent(getApplicationContext(), NessunaConnessione.class);
-                    startActivity(intent);
+                    conn.disconnect();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
-
         thread.start();
 
+        while (!flag){
+            listView.invalidateViews();
+        }
 
-        ListView listView = (ListView) findViewById(R.id.listView4);
-        List listDisponibilita = new LinkedList();
-        listDisponibilita.add(new DisponibilitaClass("Andrea","Polimena", "Info",12,12,2016,11,0,12,0));
-        ListAdapterDisponibilita listAdapterDisponibilita = new ListAdapterDisponibilita(this,R.layout.list_item_disponib,listDisponibilita);
+        ListAdapterDisponibilita listAdapterDisponibilita = new ListAdapterDisponibilita(this,R.layout.list_item_disponib,listDisp);
         listView.setAdapter(listAdapterDisponibilita);
-
+        listView.invalidateViews();
+        listView.refreshDrawableState();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

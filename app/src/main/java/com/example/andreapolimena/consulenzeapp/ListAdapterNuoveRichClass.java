@@ -13,13 +13,13 @@ import java.util.List;
 /**
  * Created by andreapolimena on 10/02/16.
  */
-public class ListAdapter extends ArrayAdapter<Utente> {
+public class ListAdapterNuoveRichClass extends ArrayAdapter<NuoveRichiesteClass> {
 
-    public ListAdapter(Context context, int textViewResourceId) {
+    public ListAdapterNuoveRichClass(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
-    public ListAdapter(Context context, int resource, List<Utente> items) {
+    public ListAdapterNuoveRichClass(Context context, int resource, List<NuoveRichiesteClass> items) {
         super(context, resource, items);
     }
 
@@ -31,24 +31,20 @@ public class ListAdapter extends ArrayAdapter<Utente> {
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.list_item_appuntamenti, null);
+            v = vi.inflate(R.layout.list_item_nuove_rich, null);
         }
-        //Utente
-        Utente p = getItem(position);
+
+        NuoveRichiesteClass p = getItem(position);
 
         if (p != null) {
             TextView data = (TextView) v.findViewById(R.id.textView2);
             TextView nomeCognome = (TextView) v.findViewById(R.id.textView3);
             TextView tipoConsulenza = (TextView) v.findViewById(R.id.textView4);
-            TextView ora = (TextView) v.findViewById(R.id.textView5);
-            TextView valutazione = (TextView) v.findViewById(R.id.textView6);
-            RatingBar ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
+            TextView oraInizio = (TextView) v.findViewById(R.id.textView5);
+            TextView oraFine = (TextView) v.findViewById(R.id.textView6);
 
-            ratingBar.setStepSize((float)0.1);
-            ratingBar.setRating((float) 2.5);
-            ratingBar.setEnabled(false);
             if (data != null) {
-                data.setText("12/12/2016");
+                data.setText(p.getDate());
             }
 
             if (nomeCognome != null) {
@@ -56,17 +52,15 @@ public class ListAdapter extends ArrayAdapter<Utente> {
             }
 
             if (tipoConsulenza != null) {
-                tipoConsulenza.setText(p.getPrimaSpec());
+                tipoConsulenza.setText(p.getSpec());
             }
-            if(ora!= null){
-                ora.setText("10:00");
+            if(oraInizio!= null){
+                oraInizio.setText(p.getOra_inizio());
             }
-            if(valutazione!=null){
-                valutazione.setText("Valutazione: "+((Float)ratingBar.getRating()).toString());
+            if(oraFine!=null){
+                oraFine.setText(p.getOra_fine());
             }
-
         }
-
         return v;
     }
 
