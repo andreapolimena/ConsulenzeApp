@@ -86,7 +86,6 @@ public class InserimentoRichiesta2 extends AppCompatActivity {
                         String date = jsonObject.getJSONObject(((Integer) k).toString()).getString("data_inizio");
                         String oraInizio = jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_inizio");
                         String oraFine = jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_fine");
-
                         InserimentoRichiestaClass inserimentoRichiestaClass = new InserimentoRichiestaClass(nome,
                                 cognome,
                                 spec,
@@ -111,11 +110,9 @@ public class InserimentoRichiesta2 extends AppCompatActivity {
             }
         });
         thread.start();
-
         while (!flag){
             listView.invalidateViews();
         }
-
         ListAdapterInsRichieste listAdapterInsRichieste = new ListAdapterInsRichieste(this, R.layout.item_registrazione2, listUtente);
         listView.setAdapter(listAdapterInsRichieste);
 

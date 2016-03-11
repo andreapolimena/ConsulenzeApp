@@ -41,35 +41,35 @@ public class Registrazione extends AppCompatActivity {
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.register);
 
-        nome= (EditText)findViewById(R.id.editText);
-        cognome= (EditText)findViewById(R.id.editText2);
-        email= (EditText)findViewById(R.id.editText3);
-        indirizzo= (EditText)findViewById(R.id.editText4);
-        primaSpec= (EditText)findViewById(R.id.editText5);
-        secondaSpec = (EditText)findViewById(R.id.editText6);
-        password= (EditText)findViewById(R.id.editText8);
-        passwordTemp = (EditText)findViewById(R.id.editText9);
+        nome = (EditText) findViewById(R.id.editText);
+        cognome = (EditText) findViewById(R.id.editText2);
+        email = (EditText) findViewById(R.id.editText3);
+        indirizzo = (EditText) findViewById(R.id.editText4);
+        primaSpec = (EditText) findViewById(R.id.editText5);
+        secondaSpec = (EditText) findViewById(R.id.editText6);
+        password = (EditText) findViewById(R.id.editText8);
+        passwordTemp = (EditText) findViewById(R.id.editText9);
 
-        Button mRegister = (Button)findViewById(R.id.button2);
+        Button mRegister = (Button) findViewById(R.id.button2);
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(nome.getText().toString().isEmpty()) {
+                if (nome.getText().toString().isEmpty()) {
                     Toast.makeText(Registrazione.this, "Nome non inserito correttamente, prego reinserirlo", Toast.LENGTH_LONG).show();
-                }else if(cognome.getText().toString().isEmpty()){
+                } else if (cognome.getText().toString().isEmpty()) {
                     Toast.makeText(Registrazione.this, "Cognome non inserito correttamente, prego reinserirlo", Toast.LENGTH_LONG).show();
-                }else if(email.getText().toString().contains("@")==false){
+                } else if (email.getText().toString().contains("@") == false) {
                     Toast.makeText(Registrazione.this, "Email non inserita correttamente, prego reinserla", Toast.LENGTH_LONG).show();
-                }else if(indirizzo.getText().toString().isEmpty()){
+                } else if (indirizzo.getText().toString().isEmpty()) {
                     Toast.makeText(Registrazione.this, "Indirizzo non inserito correttamente, prego reinserirlo", Toast.LENGTH_LONG).show();
-                }else if(primaSpec.getText().toString().isEmpty()){
+                } else if (primaSpec.getText().toString().isEmpty()) {
                     Toast.makeText(Registrazione.this, "Specializzazione non inserita correttamente, prego reinserirla", Toast.LENGTH_LONG).show();
-                }else if(secondaSpec.getText().toString().isEmpty()){
+                } else if (secondaSpec.getText().toString().isEmpty()) {
                     Toast.makeText(Registrazione.this, "Specializzazione non inserita correttamente, prego reinserirla", Toast.LENGTH_LONG).show();
-                }else if(password.getText().toString().equals(passwordTemp.getText().toString())==false || password.getText().toString().isEmpty()==true){
+                } else if (password.getText().toString().equals(passwordTemp.getText().toString()) == false || password.getText().toString().isEmpty() == true) {
                     Toast.makeText(Registrazione.this, "Password non inserita correttamente, prego reinserirlo", Toast.LENGTH_LONG).show();
-                }else{
+                } else {
 
                     Thread thread = new Thread(new Runnable() {
                         @Override
@@ -100,9 +100,6 @@ public class Registrazione extends AppCompatActivity {
                                 writer.flush();
                                 writer.close();
                                 conn.connect();
-
-                                    System.out.println(conn.getResponseCode());
-
                                 conn.disconnect();
                             } catch (MalformedURLException e) {
                                 e.printStackTrace();
