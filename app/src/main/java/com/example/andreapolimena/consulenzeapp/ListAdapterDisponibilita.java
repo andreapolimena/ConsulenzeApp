@@ -57,9 +57,10 @@ public class ListAdapterDisponibilita extends ArrayAdapter<DisponibilitaClass> {
             if(ora!= null){
                 ora.setText(p.getOra());
             }
-            if(oraFine!=null){
+            if(oraFine!=null) {
                 oraFine.setText(p.getOraFine());
             }
+
         }
         return v;
     }

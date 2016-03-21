@@ -62,4 +62,15 @@
     <string name="update">Aggiorna</string>
     <string name="update_fields">Modifica i campi</string>
     <string name="NoConnection">Ops! Forse hai dimenticato di accendere la connessione dati.</string>
+    <string name="valutation">Valutazione</string>
+    <string name="rating_text">La tua valutazione è:</string>
+    <string name="valutation_text">Scopri come ti valutano gli utenti</string>
+    <string name="end_time">Orario fine:</string>
+    <string name="start_time">Orario Inizio:</string>
+    <string name="Edit">Modifica</string>
+    <string name="delete">Cancella</string>
+    <string name="EndTime">Orario Fine:</string>
+    <string name="Spec">Specializzazione:</string>
+    <string name="StartTime">Orario Inizio:</string>
+    <string name="dateiniz">Giorno:</string>
 </resources>

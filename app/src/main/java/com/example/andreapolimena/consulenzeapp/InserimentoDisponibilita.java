@@ -66,7 +66,10 @@ public class InserimentoDisponibilita extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!editText.getText().toString().isEmpty()&&button.getText().toString().contains("-")&&button1.getText().toString().contains(":")&&button2.getText().toString().contains(":")){
+                if (!editText.getText().toString().isEmpty()&&
+                        button.getText().toString().contains("-")&&
+                        button1.getText().toString().contains(":")&&
+                        button2.getText().toString().contains(":")){
 
                     Thread thread = new Thread(new Runnable() {
                         @Override

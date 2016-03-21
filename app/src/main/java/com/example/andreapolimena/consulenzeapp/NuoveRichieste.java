@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONException;
@@ -114,6 +115,28 @@ public class NuoveRichieste extends AppCompatActivity
         listView.setAdapter(listAdapterRichiesta);
         listView.invalidateViews();
         listView.refreshDrawableState();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent;
+                switch (position) {
+                    default:
+                        NuoveRichiesteClass rich = listRich.get(position);
+                        intent = new Intent(NuoveRichieste.this, InserimentoRichiesta.class);
+                        intent.putExtra("cognome", rich.getCognome());
+                        intent.putExtra("nome", rich.getNome());
+                        intent.putExtra("specializzazione", rich.getSpec());
+                        intent.putExtra("giorno", rich.getDate());
+                        intent.putExtra("oraInizio", rich.getOra_inizio());
+                        intent.putExtra("oraFine", rich.getOra_fine());
+                        startActivity(intent);
+                        break;
+                    //add more if you have more items in listview
+                    //0 is the first item 1 second and so on...
+                }
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -88,6 +89,7 @@ public class Disponibilita extends AppCompatActivity
                         response += c;
                     }
                     JSONObject jsonObject = new JSONObject(response);
+
                     int k = 0;
                     while (k < jsonObject.length()) {
                         String nome = jsonObject.getJSONObject(((Integer) k).toString()).getString("nome");
@@ -96,6 +98,7 @@ public class Disponibilita extends AppCompatActivity
                         String date = jsonObject.getJSONObject(((Integer) k).toString()).getString("data_inizio");
                         String oraInizio = jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_inizio");
                         String oraFine = jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_fine");
+                        int ripetizione = jsonObject.getJSONObject(((Integer)k).toString()).getInt("ripetizione");
 
                         DisponibilitaClass disponibilitaClass = new DisponibilitaClass(
                                 nome,
@@ -103,7 +106,8 @@ public class Disponibilita extends AppCompatActivity
                                 spec,
                                 date,
                                 oraInizio,
-                                oraFine
+                                oraFine,
+                                ripetizione
                         );
 
                         if (!listDisp.contains(disponibilitaClass))
@@ -128,10 +132,34 @@ public class Disponibilita extends AppCompatActivity
             listView.invalidateViews();
         }
 
-        ListAdapterDisponibilita listAdapterDisponibilita = new ListAdapterDisponibilita(this,R.layout.list_item_disponib,listDisp);
+        final ListAdapterDisponibilita listAdapterDisponibilita = new ListAdapterDisponibilita(this,R.layout.list_item_disponib,listDisp);
         listView.setAdapter(listAdapterDisponibilita);
         listView.invalidateViews();
         listView.refreshDrawableState();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent;
+                switch (position) {
+                    default:
+                        DisponibilitaClass disp = listDisp.get(position);
+
+                        intent = new Intent(Disponibilita.this, GestioneDisponibilita.class);
+                        intent.putExtra("cognome", disp.getCognome());
+                        intent.putExtra("nome", disp.getNome());
+                        intent.putExtra("specializzazione", disp.getSpec());
+                        intent.putExtra("giorno", disp.getDate());
+                        intent.putExtra("oraInizio", disp.getOra());
+                        intent.putExtra("oraFine", disp.getOraFine());
+                        intent.putExtra("ripetizione", disp.getRipetizione());
+                        startActivity(intent);
+                        break;
+                    //add more if you have more items in listview
+                    //0 is the first item 1 second and so on...
+                }
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

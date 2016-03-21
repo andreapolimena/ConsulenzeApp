@@ -12,6 +12,16 @@ public class DisponibilitaClass {
     public String ora = "00:00:00";
     public String oraFine ="00:00:00";
 
+    public int getRipetizione() {
+        return ripetizione;
+    }
+
+    public void setRipetizione(int ripetizione) {
+        this.ripetizione = ripetizione;
+    }
+
+    public int ripetizione=0;
+
     public String getOraFine() {
         return oraFine;
     }
@@ -75,13 +85,14 @@ public class DisponibilitaClass {
         this.spec = spec;
     }
 
-    public DisponibilitaClass(String nome, String cognome, String spec, String date, String ora, String oraFine) {
+    public DisponibilitaClass(String nome, String cognome, String spec, String date, String ora, String oraFine, int ripetizione) {
         setNome(nome);
         setCognome(cognome);
         setSpec(spec);
         setDate(date);
         setOra(ora);
         setOraFine(oraFine);
+        setRipetizione(ripetizione);
     }
 
 }

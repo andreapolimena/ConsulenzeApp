@@ -60,6 +60,8 @@
         <activity android:name=".InserimentoRichiesta" />
         <activity android:name=".InserimentoRichiesta2" />
         <activity android:name=".NessunaConnessione" />
+        <activity android:name=".GestioneDisponibilita" />
+        <activity android:name=".ModificaDisponibilita"></activity>
     </application>
 
 </manifest>
