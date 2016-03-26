@@ -82,6 +82,8 @@
     <string name="Tutor">Tutor:</string>
     <string name="EvaluateTutor">Evaluate Tutor</string>
     <string name="FinishDate">Finish Date</string>
+    <string name="TextValTutor">Here you can add your own rating for this tutor</string>
+    <string name="SendEvaluation">Send Evaluation</string>
 
 
 </resources>

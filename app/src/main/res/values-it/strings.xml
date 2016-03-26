@@ -76,4 +76,6 @@
     <string name="Tutor">Tutor:</string>
     <string name="EvaluateTutor">Valuta Tutor</string>
     <string name="FinishDate">Termina Appuntamento</string>
+    <string name="TextValTutor">Qui puoi inserire la tua valutazione per questo tutor</string>
+    <string name="SendEvaluation">Invia Valutazione</string>
 </resources>

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,35 +20,30 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class GestioneAppuntamenti extends AppCompatActivity {
+public class ValutaTutor extends AppCompatActivity {
 
-    boolean flag=false;
+    boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gestione_appuntamenti);
+        setContentView(R.layout.activity_valuta_tutor);
 
-        final TextView specializzazioneView = (TextView)findViewById(R.id.textView34);
-        final TextView giornoView = (TextView)findViewById(R.id.textView35);
-        final TextView oraInizioView = (TextView)findViewById(R.id.textView36);
-        TextView oraFineView = (TextView)findViewById(R.id.textView37);
+        TextView nomeECognomeTutor = (TextView) findViewById(R.id.textView29);
+        nomeECognomeTutor.setText(new StringBuilder().append(getIntent().getStringExtra("nomeTutor")).append(" ").append(getIntent().getStringExtra("cognomeTutor")).toString());
+        final RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar5);
 
-
-        specializzazioneView.setText(getIntent().getStringExtra("specializzazione"));
-        giornoView.setText(getIntent().getStringExtra("giorno"));
-        oraInizioView.setText(getIntent().getStringExtra("oraInizio"));
-        oraFineView.setText(getIntent().getStringExtra("nome") + " " + getIntent().getStringExtra("cognome"));
-
-        Button termina = (Button)findViewById(R.id.button21);
-        termina.setOnClickListener(new View.OnClickListener() {
+        Button invia = (Button)findViewById(R.id.button11);
+        invia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
                             JSONObject json = new JSONObject();
-                            String serverUrl = "http://andreapolimena2.altervista.org/script_php/TerminaAppuntamento.php";
+                            String serverUrl = "http://andreapolimena2.altervista.org/script_php/InsValutazione.php";
                             URL url = new URL(serverUrl);
                             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                             conn.setReadTimeout(10000);
@@ -55,9 +51,10 @@ public class GestioneAppuntamenti extends AppCompatActivity {
                             conn.setRequestMethod("PUT");
                             conn.setDoOutput(true);
 
-                            json.put("email", Inizio.utenteLoggato);
-                            json.put("dataInizio", giornoView.getText().toString());
-                            json.put("oraInizio", oraInizioView.getText().toString());
+                            json.put("emailUtente", Inizio.utenteLoggato);
+                            json.put("nomeTutor", getIntent().getStringExtra("nomeTutor"));
+                            json.put("cognomeTutor", getIntent().getStringExtra("cognomeTutor"));
+                            json.put("valutazione", ratingBar.getRating());
 
                             OutputStream os = conn.getOutputStream();
                             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
@@ -68,10 +65,11 @@ public class GestioneAppuntamenti extends AppCompatActivity {
                             writer.close();
                             conn.connect();
 
-                            int responsecode = conn.getResponseCode();
-                            if (responsecode == 200) {
-                                flag = true;
+                            int responsecode=conn.getResponseCode();
+                            if(responsecode==200){
+                                flag=true;
                             }
+
                             conn.disconnect();
 
                         } catch (MalformedURLException e) {
@@ -84,24 +82,11 @@ public class GestioneAppuntamenti extends AppCompatActivity {
                     }
                 });
                 thread.start();
-                while (!flag) {
+                while (!flag){
 
                 }
-
-                Toast.makeText(GestioneAppuntamenti.this, "Appuntamento terminato", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(GestioneAppuntamenti.this, Appuntamenti.class);
-                startActivity(intent);
-            }
-        });
-
-        Button valuta = (Button)findViewById(R.id.button20);
-        valuta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GestioneAppuntamenti.this, ValutaTutor.class);
-                intent.putExtra("nomeTutor",getIntent().getStringExtra("nome"));
-                intent.putExtra("cognomeTutor", getIntent().getStringExtra("cognome"));
-                startActivity(intent);
+                Toast.makeText(ValutaTutor.this, "Valutazione inserita correttamente", Toast.LENGTH_LONG).show();
+                finish();
             }
         });
 

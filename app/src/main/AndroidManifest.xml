@@ -63,7 +63,8 @@
         <activity android:name=".NessunaConnessione" />
         <activity android:name=".GestioneDisponibilita" />
         <activity android:name=".ModificaDisponibilita" />
-        <activity android:name=".GestioneAppuntamenti"></activity>
+        <activity android:name=".GestioneAppuntamenti" />
+        <activity android:name=".ValutaTutor"></activity>
     </application>
 
 </manifest>
