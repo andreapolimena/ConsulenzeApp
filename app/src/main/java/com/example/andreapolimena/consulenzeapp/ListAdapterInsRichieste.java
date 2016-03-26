@@ -59,8 +59,11 @@ public class ListAdapterInsRichieste extends ArrayAdapter<InserimentoRichiestaCl
             final TextView nomeCognome = (TextView) v.findViewById(R.id.textView10);
             TextView valutazione = (TextView) v.findViewById(R.id.textView9);
             RatingBar ratingBar2 = (RatingBar) v.findViewById(R.id.ratingBar2);
+            ratingBar2.setStepSize((float)0.1);
+            ratingBar2.setNumStars(5);
 
-            Button button7 = (Button)v.findViewById(R.id.button7);
+
+            Button button7 = (Button) v.findViewById(R.id.button7);
             button7.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -95,9 +98,9 @@ public class ListAdapterInsRichieste extends ArrayAdapter<InserimentoRichiestaCl
                                 writer.close();
                                 conn.connect();
 
-                                int responsecode=conn.getResponseCode();
-                                if(responsecode==200){
-                                    flag=true;
+                                int responsecode = conn.getResponseCode();
+                                if (responsecode == 200) {
+                                    flag = true;
                                 }
 
                                 conn.disconnect();
@@ -113,18 +116,14 @@ public class ListAdapterInsRichieste extends ArrayAdapter<InserimentoRichiestaCl
                         }
                     });
                     thread.start();
-                    while (!flag){
+                    while (!flag) {
 
                     }
-                    Toast.makeText(v.getContext(), "Richiesta inviata correttamente",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Richiesta inviata correttamente", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(v.getContext(), NuoveRichieste.class);
                     v.getContext().startActivity(intent);
                 }
             });
-
-            ratingBar2.setStepSize((float)0.1);
-            ratingBar2.setNumStars(5);
-            ratingBar2.setRating((float)4.8);
 
             if (dataEOra != null) {
                 dataEOra.setText(p.getDate()+" "+p.getOra()+" -> "+p.getOraFine());
@@ -134,7 +133,10 @@ public class ListAdapterInsRichieste extends ArrayAdapter<InserimentoRichiestaCl
                 nomeCognome.setText(p.getNome()+ " "+p.getCognome());
             }
             if(valutazione!= null){
-                valutazione.setText("Valutazione: 4.8");
+                valutazione.setText("Valutazione");
+            }
+            if(ratingBar2!=null){
+                ratingBar2.setRating((float) p.getValutazione());
             }
 
         }

@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,7 +48,6 @@ public class ListAdapterAppuntamentiClass extends ArrayAdapter<AppuntamentiClass
             ratingBar.setStepSize((float) 0.1);
             ratingBar.setRating((float) 2.5);
             ratingBar.setEnabled(false);
-
 
             if (data != null) {
                 data.setText(p.getDate());

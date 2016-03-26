@@ -86,12 +86,17 @@ public class InserimentoRichiesta2 extends AppCompatActivity {
                         String date = jsonObject.getJSONObject(((Integer) k).toString()).getString("data_inizio");
                         String oraInizio = jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_inizio");
                         String oraFine = jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_fine");
+                        float valutazione = (float)(jsonObject.getJSONObject(((Integer) k).toString()).getDouble("valutazione"));
+
+                        System.out.println("la valutazione è: "+valutazione);
+
                         InserimentoRichiestaClass inserimentoRichiestaClass = new InserimentoRichiestaClass(nome,
                                 cognome,
                                 spec,
                                 date,
                                 oraInizio,
-                                oraFine);
+                                oraFine,
+                                valutazione);
 
                         if (!listUtente.contains(inserimentoRichiestaClass))
                             listUtente.add(inserimentoRichiestaClass);

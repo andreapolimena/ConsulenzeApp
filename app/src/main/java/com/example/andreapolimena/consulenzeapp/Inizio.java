@@ -178,7 +178,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                             Intent intent = new Intent(Inizio.this, Appuntamenti.class);
                             startActivity(intent);
                         } else {
-                            //Toast.makeText(getApplicationContext(), "Credenziali errate", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Credenziali errate", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

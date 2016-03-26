@@ -79,6 +79,9 @@
     <string name="dateiniz">Date:</string>
     <string name="StartTime">Start Time</string>
     <string name="EndTime">End Time</string>
+    <string name="Tutor">Tutor:</string>
+    <string name="EvaluateTutor">Evaluate Tutor</string>
+    <string name="FinishDate">Finish Date</string>
 
 
 </resources>

@@ -12,8 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -22,13 +24,15 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Appuntamenti extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private List listAppuntamentiClass = new LinkedList();
+    //public List listAppuntamentiClass = new LinkedList();
+    public ArrayList<AppuntamentiClass> listAppuntamentiClass = new ArrayList<AppuntamentiClass>();
     public boolean flag = false;
 
     @Override
@@ -37,7 +41,6 @@ public class Appuntamenti extends AppCompatActivity
         setContentView(R.layout.activity_appuntamenti);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,20 +140,25 @@ public class Appuntamenti extends AppCompatActivity
                         c = (char) r;
                         response += c;
                     }
+                    isw.close();
+                    conn.disconnect();
 
                     JSONObject jsonObject = new JSONObject(response);
                     int k = 0;
                     while (k < jsonObject.length()) {
+
                         listAppuntamentiClass.add(new AppuntamentiClass(
                                 jsonObject.getJSONObject(((Integer) k).toString()).getString("nome"),
                                 jsonObject.getJSONObject(((Integer) k).toString()).getString("cognome"),
                                 jsonObject.getJSONObject(((Integer) k).toString()).getString("specializzazione"),
                                 jsonObject.getJSONObject(((Integer) k).toString()).getString("data_appuntamento"),
-                                jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_inizio")
+                                jsonObject.getJSONObject(((Integer) k).toString()).getString("ora_inizio"),
+                                (float) 2
                         ));
                         k++;
                     }
-                    flag=true;
+
+                    flag = true;
                     isw.close();
                     conn.disconnect();
                 } catch (Exception e) {
@@ -162,15 +170,38 @@ public class Appuntamenti extends AppCompatActivity
 
         thread.start();
 
-        while (!flag){
+
+        while (!flag) {
             listView.invalidateViews();
         }
-
 
         ListAdapterAppuntamentiClass listAdapterAppuntamentiClass = new ListAdapterAppuntamentiClass(this, R.layout.list_item_appuntamenti, listAppuntamentiClass);
         listView.setAdapter(listAdapterAppuntamentiClass);
         listView.invalidateViews();
         listView.refreshDrawableState();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent;
+                switch (position) {
+                    default:
+                        AppuntamentiClass appuntamentiClass = listAppuntamentiClass.get(position);
+
+                        intent = new Intent(Appuntamenti.this, GestioneAppuntamenti.class);
+                        intent.putExtra("cognome", appuntamentiClass.getCognome());
+                        intent.putExtra("nome", appuntamentiClass.getNome());
+                        intent.putExtra("specializzazione", appuntamentiClass.getSpec());
+                        intent.putExtra("giorno", appuntamentiClass.getDate());
+                        intent.putExtra("oraInizio", appuntamentiClass.getOra());
+                        startActivity(intent);
+                        break;
+                    //add more if you have more items in listview
+                    //0 is the first item 1 second and so on...
+                }
+            }
+        });
+
     }
 
     @Override

@@ -26,62 +26,30 @@ public class ModificaRichiesta extends AppCompatActivity {
     public boolean flag = false;
     public static String dataVecchia = "";
     public static String oraInizioVecchia = "";
-    public static int ripetizione;
+    public static String oraFineVecchia = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modifica_disponibilita);
+        setContentView(R.layout.activity_modifica_richiesta);
 
-        final RadioButton radioButton4 = (RadioButton)findViewById(R.id.radiobutton4);
-        final RadioButton radioButton5 = (RadioButton)findViewById(R.id.radiobutton5);
-        final RadioButton radioButton6 = (RadioButton)findViewById(R.id.radiobutton6);
         final EditText specializzazione = (EditText)findViewById(R.id.specializzazione);
         final Button selectData = (Button) findViewById(R.id.date);
         final Button oraInizio = (Button)findViewById(R.id.oraInizio);
         final Button oraFine =(Button)findViewById(R.id.oraFine);
         Button modifica = (Button) findViewById(R.id.Modifica);
-        radioButton4.toggle();
+        Button cancella = (Button)findViewById(R.id.Cancella);
+
         specializzazione.setEnabled(false);
 
-        specializzazione.setText(getIntent().getBundleExtra("bundle").getString("specializzazione"));
-        selectData.setText(getIntent().getBundleExtra("bundle").getString("giorno"));
-        oraInizio.setText(getIntent().getBundleExtra("bundle").getString("oraInizio"));
-        oraFine.setText(getIntent().getBundleExtra("bundle").getString("oraFine"));
-        dataVecchia = getIntent().getBundleExtra("bundle").getString("giorno");
-        oraInizioVecchia = getIntent().getBundleExtra("bundle").getString("oraInizio");
-        ripetizione = getIntent().getBundleExtra("bundle").getInt("ripetizione");
+        specializzazione.setText(getIntent().getStringExtra("specializzazione"));
+        selectData.setText(getIntent().getStringExtra("giorno"));
+        oraInizio.setText(getIntent().getStringExtra("oraInizio"));
+        oraFine.setText(getIntent().getStringExtra("oraFine"));
+        dataVecchia = getIntent().getStringExtra("giorno");
+        oraInizioVecchia = getIntent().getStringExtra("oraInizio");
+        oraFineVecchia = getIntent().getStringExtra("oraFine");
 
-        if(ripetizione==0){
-            radioButton4.toggle();
-        }else if(ripetizione==1){
-            radioButton5.toggle();
-        }else if(ripetizione==2){
-            radioButton6.toggle();
-        }else {
-            radioButton4.toggle();
-        }
-
-        radioButton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ripetizione = 0;
-            }
-        });
-
-        radioButton5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ripetizione = 1;
-            }
-        });
-
-        radioButton6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ripetizione = 2;
-            }
-        });
 
         selectData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +90,7 @@ public class ModificaRichiesta extends AppCompatActivity {
                         public void run() {
                             try {
                                 JSONObject json = new JSONObject();
-                                String serverUrl = "http://andreapolimena2.altervista.org/script_php/EditDisponibilita.php";
+                                String serverUrl = "http://andreapolimena2.altervista.org/script_php/EditRichiesta.php";
                                 URL url = new URL(serverUrl);
                                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                 conn.setReadTimeout(10000);
@@ -131,21 +99,12 @@ public class ModificaRichiesta extends AppCompatActivity {
                                 conn.setDoOutput(true);
 
                                 json.put("email", Inizio.utenteLoggato);
-                                json.put("dataInizio", dataVecchia);
+                                json.put("dataRichiesta", dataVecchia);
                                 json.put("oraInizio", oraInizioVecchia);
-                                json.put("dataInizioMOD", selectData.getText().toString());
+                                json.put("oraFine", oraFineVecchia);
+                                json.put("dataRichiestaMOD", selectData.getText().toString());
                                 json.put("oraInizioMOD", oraInizio.getText().toString());
                                 json.put("oraFineMOD", oraFine.getText().toString());
-                                json.put("dataFineMOD", "2017-03-09");
-                                if (radioButton4.isChecked()) {
-                                    json.put("ripetizione", 0);
-                                } else if (radioButton5.isChecked()) {
-                                    json.put("ripetizione", 1);
-                                } else if (radioButton6.isChecked()) {
-                                    json.put("ripetizione", 2);
-                                } else {
-                                    json.put("ripetizione", 0);
-                                }
 
                                 OutputStream os = conn.getOutputStream();
                                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
@@ -160,9 +119,7 @@ public class ModificaRichiesta extends AppCompatActivity {
                                 if (responsecode == 200) {
                                     flag = true;
                                 }
-
                                 conn.disconnect();
-
 
                             } catch (MalformedURLException e) {
                                 e.printStackTrace();
@@ -177,13 +134,64 @@ public class ModificaRichiesta extends AppCompatActivity {
                     while (!flag) {
 
                     }
-
-                    Toast.makeText(ModificaRichiesta.this, "Disponibilità modificata correttamente", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(ModificaRichiesta.this, Disponibilita.class);
+                    Toast.makeText(ModificaRichiesta.this, "Richiesta modificata correttamente", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ModificaRichiesta.this, NuoveRichieste.class);
                     startActivity(intent);
                 }
             }
         });
 
+        cancella.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject json = new JSONObject();
+                            String serverUrl = "http://andreapolimena2.altervista.org/script_php/DelRichiesta.php";
+                            URL url = new URL(serverUrl);
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setReadTimeout(10000);
+                            conn.setConnectTimeout(15000);
+                            conn.setRequestMethod("PUT");
+                            conn.setDoOutput(true);
+
+                            json.put("email", Inizio.utenteLoggato);
+                            json.put("nomeTutor", getIntent().getStringExtra("nome"));
+                            json.put("cognomeTutor", getIntent().getStringExtra("cognome"));
+                            json.put("dataRichiesta", getIntent().getStringExtra("giorno"));
+                            json.put("oraInizio", getIntent().getStringExtra("oraInizio"));
+
+                            OutputStream os = conn.getOutputStream();
+                            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                            String data = json.toString();
+
+                            writer.write(data);
+                            writer.flush();
+                            writer.close();
+                            conn.connect();
+
+                            if (conn.getResponseCode() == 200) {
+                                flag = true;
+                            }
+                            conn.disconnect();
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+                while (!flag) {
+
+                }
+                Intent intent = new Intent(ModificaRichiesta.this, NuoveRichieste.class);
+                startActivity(intent);
+            }
+        });
     }
 }

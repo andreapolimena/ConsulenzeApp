@@ -58,10 +58,12 @@
             android:label="@string/title_activity_profilo"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".InserimentoRichiesta" />
+        <activity android:name=".ModificaRichiesta" />
         <activity android:name=".InserimentoRichiesta2" />
         <activity android:name=".NessunaConnessione" />
         <activity android:name=".GestioneDisponibilita" />
-        <activity android:name=".ModificaDisponibilita"></activity>
+        <activity android:name=".ModificaDisponibilita" />
+        <activity android:name=".GestioneAppuntamenti"></activity>
     </application>
 
 </manifest>

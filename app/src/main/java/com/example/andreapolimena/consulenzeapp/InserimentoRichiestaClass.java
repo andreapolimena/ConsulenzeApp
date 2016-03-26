@@ -12,6 +12,16 @@ public class InserimentoRichiestaClass {
     public String ora = "00:00:00";
     public String oraFine ="00:00:00";
 
+    public float getValutazione() {
+        return valutazione;
+    }
+
+    public void setValutazione(float valutazione) {
+        this.valutazione = valutazione;
+    }
+
+    public float valutazione = (float) 1.0;
+
     public String getOraFine() {
         return oraFine;
     }
@@ -75,13 +85,14 @@ public class InserimentoRichiestaClass {
         this.spec = spec;
     }
 
-    public InserimentoRichiestaClass(String nome, String cognome, String spec, String date, String ora, String oraFine) {
+    public InserimentoRichiestaClass(String nome, String cognome, String spec, String date, String ora, String oraFine, float valutazione) {
         setNome(nome);
         setCognome(cognome);
         setSpec(spec);
         setDate(date);
         setOra(ora);
         setOraFine(oraFine);
+        setValutazione(valutazione);
     }
 
 }

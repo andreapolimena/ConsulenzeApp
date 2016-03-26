@@ -73,4 +73,7 @@
     <string name="Spec">Specializzazione:</string>
     <string name="StartTime">Orario Inizio:</string>
     <string name="dateiniz">Giorno:</string>
+    <string name="Tutor">Tutor:</string>
+    <string name="EvaluateTutor">Valuta Tutor</string>
+    <string name="FinishDate">Termina Appuntamento</string>
 </resources>
