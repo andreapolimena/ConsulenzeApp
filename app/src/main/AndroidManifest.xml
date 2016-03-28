@@ -64,7 +64,8 @@
         <activity android:name=".GestioneDisponibilita" />
         <activity android:name=".ModificaDisponibilita" />
         <activity android:name=".GestioneAppuntamenti" />
-        <activity android:name=".ValutaTutor"></activity>
+        <activity android:name=".ValutaTutor" />
+        <activity android:name=".GestioneRichieste"></activity>
     </application>
 
 </manifest>

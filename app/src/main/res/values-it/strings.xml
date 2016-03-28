@@ -78,4 +78,7 @@
     <string name="FinishDate">Termina Appuntamento</string>
     <string name="TextValTutor">Qui puoi inserire la tua valutazione per questo tutor</string>
     <string name="SendEvaluation">Invia Valutazione</string>
+    <string name="Accept">Accetta</string>
+    <string name="Deny">Rifiuta</string>
+    <string name="User">Utente:</string>
 </resources>

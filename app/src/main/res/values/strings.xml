@@ -84,6 +84,9 @@
     <string name="FinishDate">Finish Date</string>
     <string name="TextValTutor">Here you can add your own rating for this tutor</string>
     <string name="SendEvaluation">Send Evaluation</string>
+    <string name="Accept">Accept</string>
+    <string name="Deny">Deny</string>
+    <string name="User">User</string>
 
 
 </resources>

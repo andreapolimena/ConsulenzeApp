@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="4.0"
+                android:text="@string/AppName"
                 android:id="@+id/textView18"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/secondary_text"
@@ -64,11 +64,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ratingBar3"
-                android:max="5"
                 android:numStars="5"
                 android:isIndicator="true"
                 android:stepSize="0.1"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                style="?android:attr/ratingBarStyle"/>
         </LinearLayout>
     </ScrollView>
 
