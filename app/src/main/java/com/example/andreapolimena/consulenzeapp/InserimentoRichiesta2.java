@@ -36,6 +36,8 @@ public class InserimentoRichiesta2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inserimento_richiesta2);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.insert_request);
 
         listView = (ListView) findViewById(R.id.listView3);
 

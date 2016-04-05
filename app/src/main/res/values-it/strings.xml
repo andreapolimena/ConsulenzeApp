@@ -61,7 +61,7 @@
     <string name="send_request">Invia richiesta</string>
     <string name="update">Aggiorna</string>
     <string name="update_fields">Modifica i campi</string>
-    <string name="NoConnection">Ops! Forse hai dimenticato di accendere la connessione dati.</string>
+    <string name="NoConnection">Ops! Forse hai dimenticato di accendere la connessione dati oppure hai sbagliato ad inserire i dati. Per favore torna indietro e riprova.</string>
     <string name="valutation">Valutazione</string>
     <string name="rating_text">La tua valutazione è:</string>
     <string name="valutation_text">Scopri come ti valutano gli utenti</string>

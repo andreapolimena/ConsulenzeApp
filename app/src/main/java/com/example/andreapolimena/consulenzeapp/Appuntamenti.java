@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -25,14 +24,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Appuntamenti extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //public List listAppuntamentiClass = new LinkedList();
-    public ArrayList<AppuntamentiClass> listAppuntamentiClass = new ArrayList<AppuntamentiClass>();
+    public ArrayList<AppuntamentiClass> listAppuntamentiClass = new ArrayList<>();
     public boolean flag = false;
 
     @Override
@@ -59,49 +55,6 @@ public class Appuntamenti extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //UtenteDbHelper utenteDbHelper = new UtenteDbHelper(this);
-        //SQLiteDatabase database = utenteDbHelper.getReadableDatabase();
-
-        //database = utenteDbHelper.getWritableDatabase();
-        //database.execSQL("insert into Appuntamenti values(1, 'andrea', 'polimena', 'infor', '2016-01-01','20:00:00');");
-
-        /*Cursor cursor = database.rawQuery("select nome, cognome, spec_princ, data, ora from Appuntamenti where email=='"+Inizio.utenteLoggato+"'", null);
-
-        if(cursor!=null && cursor.moveToFirst()) {
-            while(!cursor.isAfterLast()) {
-                String nome = "";
-                String cognome = "";
-                String spec = "";
-                String data = "";
-                String time ="";
-                int giorno = 0;
-                int mese = 0;
-                int anno = 0;
-                int ora = 0;
-                int min = 0;
-                nome = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_NOME));
-                cognome = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_COGNOME));
-                spec = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_SPEC_PRINC));
-                data = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_DATE));
-                time = cursor.getString(cursor.getColumnIndexOrThrow(UtenteDb.Utente.COLUMN_NAME_ORA));
-
-                String[] parts = data.split("-");
-                String[] parts2 = time.split(":");
-
-                giorno = Integer.parseInt(parts[2]);
-                mese = Integer.parseInt(parts[1]);
-                anno = Integer.parseInt(parts[0]);
-                ora = Integer.parseInt(parts2[0]);
-                min = Integer.parseInt(parts2[1]);
-
-                listAppuntamentiClass.add(new AppuntamentiClass(nome, cognome, spec, giorno, mese, anno, ora, min));
-                cursor.moveToNext();
-            }
-            cursor.close();
-        }
-        database.close();
-        utenteDbHelper.close();
-*/
         ListView listView = (ListView) findViewById(R.id.listView2);
 
         Thread thread = new Thread(new Runnable() {

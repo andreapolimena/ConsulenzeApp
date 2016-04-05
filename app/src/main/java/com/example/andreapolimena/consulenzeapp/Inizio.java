@@ -95,15 +95,13 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        utenteLoggato="";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inizio);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
         mPasswordView = (EditText) findViewById(R.id.password);
-
-        mEmailView.setText("a@a");
-        mPasswordView.setText("a");
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -123,6 +121,7 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Inizio.utenteLoggato="";
                         try {
                             JSONObject json = new JSONObject();
                             String serverUrl = "http://andreapolimena2.altervista.org/script_php/Accesso.php";
@@ -166,19 +165,18 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                             if(response.toString().endsWith("Accesso effettuato")){
                                 accesso=true;
                                 Inizio.utenteLoggato=email;
-                                Log.e("Stampa", response);
+                            }else{
+                                accesso=false;
+                                Toast.makeText(getApplicationContext(), "Credenziali errate", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
-                            Intent intent = new Intent(getApplicationContext(), NessunaConnessione.class);
+                            Intent intent = new Intent(Inizio.this, NessunaConnessione.class);
                             startActivity(intent);
                         }
 
                         if (!Inizio.utenteLoggato.isEmpty()) {
-                            //Toast.makeText(getApplicationContext(), "Loggato come: " + Inizio.utenteLoggato, Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Inizio.this, Appuntamenti.class);
                             startActivity(intent);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Credenziali errate", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -195,7 +193,6 @@ public class Inizio extends AppCompatActivity implements LoaderCallbacks<Cursor>
                 startActivity(mRegisterIntent);
             }
         });
-
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);

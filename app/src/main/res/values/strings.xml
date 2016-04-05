@@ -71,7 +71,7 @@
     <string name="update">Update</string>
     <string name="start_time">Start time:</string>
     <string name="end_time">End time:</string>
-    <string name="NoConnection">Ops!! Maybe you forget to turn on data connection.</string>
+    <string name="NoConnection">Ops!! Maybe you forget to turn on data connection or your email and password are not correct. Please go back and retry.</string>
     <string name="valutation">Valutation</string>
     <string name="Edit">Edit</string>
     <string name="delete">Delete</string>

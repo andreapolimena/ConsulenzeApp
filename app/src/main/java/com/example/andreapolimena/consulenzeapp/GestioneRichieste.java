@@ -7,10 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
